@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('laporan', function (Blueprint $table) {
+        Schema::create('laporans', function (Blueprint $table) {
             $table->id();
             $table->uuid('kode_pelapor');
             $table->foreign('kode_pelapor')->references('id')->on('users')->onDelete('cascade');

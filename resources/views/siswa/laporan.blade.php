@@ -114,17 +114,31 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                     </div>
+                    @if(session('message'))
+                    <div class="alert alert-primary">{{ session('message') }}</div>
+                @endif
+                @if ($errors->any())
+<div class="alert alert-danger">
+<ul>
+    @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
+</ul>
+</div>
+@endif
 
                     <!-- Content Row -->
 
                     <div class="row">
 
+
                         <!-- Area Chart -->
-                        <div class="">
-                            <form action="{{route('siswa.laporan.submit')}}" method="post">
+                        <div class="col-lg-6">
+                            <form action="{{route('siswa.laporan.submit')}}" method="post" enctype="multipart/form-data">
+                                @csrf
                                 <div>
-                                        <label for="user">Nama Pelaku:</label>
-                                    <select id="user" name="user_id" class="form-control select2">
+                                        <label for="pelaku">Nama Pelaku:</label>
+                                    <select id="pelaku" name="id_pelaku" class="form-control select2">
                                         <option value="">-- Pilih nama siswa --</option>
                                         @foreach($users as $id => $nama)
                                             <option value="{{ $id }}">{{ $nama }}</option>
@@ -133,7 +147,7 @@
                                 </div>
                                 <div>
                                     <label for="description">Deksripsi:</label>
-                                <textarea class="col-12"></textarea>
+                                <textarea name="deskripsi" class="col-12"></textarea>
                                 </div>
                                 <div>
                                     <label for="kategori">Kategori Pelanggaran:</label>
@@ -152,7 +166,7 @@
                                             <i class="fa fa-upload fa-2x"></i>
                                         </div>
                                         <h4 style="color: #616161; !important" id="uploadText">Tarik file atau klik untuk mengupload</h4>
-                                        <p id="uploadInstructions">Format: gambar (.jpg, .png, .jpeg) | Max size: 2MB <br>Keamanan data terjamin! Semua file akan dienkripsi oleh sistem.</p>
+                                        <p id="uploadInstructions">Format: gambar (.jpg, .png, .jpeg) | Max size: 1MB <br>Keamanan data terjamin! Semua file akan dienkripsi oleh sistem.</p>
                                     </label>
                                     <p id="file-name" class="mt-2"></p>
                                     <img id="imagePreview" src="" alt="Image Preview" class="preview-img hidden">
@@ -211,7 +225,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="{{asset('assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
