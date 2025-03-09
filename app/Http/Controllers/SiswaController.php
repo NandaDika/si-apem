@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class SiswaController extends Controller
@@ -54,5 +55,54 @@ class SiswaController extends Controller
 
 
         return redirect()->back()->with('message', 'Data berhasil ditambahkan');
+    }
+
+    public function pageRiwayatLaporan(){
+        $data = DB::table('laporans')
+        ->join('users', 'laporans.kode_terlapor', '=', 'users.id')
+        ->join('kategoris', 'laporans.kategori', '=', 'kategoris.id')->where('laporans.kode_pelapor', Auth::id())
+        ->select('laporans.*', 'users.nama as nama_terlapor', 'kategoris.judul as nama_kategori')->get();
+        //dd($data);
+        return view('siswa.listriwayat', ['users' => $data]);
+    }
+
+    public function pageDilaporkan(){
+        $data = DB::table('laporans')
+        ->join('users', 'laporans.kode_terlapor', '=', 'users.id')
+        ->join('kategoris', 'laporans.kategori', '=', 'kategoris.id')->where('laporans.kode_terlapor', Auth::id())
+        ->select('laporans.*', 'users.nama as nama_terlapor', 'kategoris.judul as nama_kategori')->get();
+        //dd($data);
+        return view('siswa.dilaporkan', ['users' => $data]);
+    }
+
+    public function getDetailLaporan(Request $request){
+        $deryptedID = Crypt::decrypt($request->id_laporan);
+        $data = Laporan::where('id', $deryptedID)->first();
+
+        return view('siswa.detaillaporan', ['data' => $data]);
+        dd($deryptedID);
+    }
+
+    public function showEncryptedImage($id){
+        $decryptedID = Crypt::decrypt($id);
+        $data = Laporan::where('id', $decryptedID)->first();
+        $path = 'private/bukti/' . $data->image;
+        if (!Storage::exists($path)) {
+            abort(404, 'File not found');
+        }
+        $encryptedContent = Storage::get($path);
+        $decryptedContent = Crypt::decrypt($encryptedContent);
+
+
+        return response($decryptedContent)
+        ->header('Content-Type', 'image/jpeg');
+    }
+
+    public function getDetailSanggah(Request $request){
+        $deryptedID = Crypt::decrypt($request->id_laporan);
+        $data = Laporan::where('id', $deryptedID)->first();
+
+        return view('siswa.detailsanggah', ['data' => $data]);
+        dd($deryptedID);
     }
 }
