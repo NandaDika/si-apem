@@ -28,7 +28,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @include('admin.component.sidebar')
+        @include('siswa.component.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -38,7 +38,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include('admin.component.header')
+                @include('siswa.component.header')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -46,41 +46,40 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <h1 class="h3 mb-0 text-gray-800">Detail Laporan</h1>
                     </div>
 
                     <!-- Content Row -->
 
                     <!-- Content Row -->
-                    <div class="row col-lg-6">
+                    <div class="col-12 col-lg-7 mt-2 mb-2">
                         <div class="card mb-6">
                             <div class="card-body pt-12">
                               <div class="user-avatar-section">
                                 <div class="d-flex align-items-center flex-column">
                                   <div class="user-info text-center">
-                                      <h3>Diajukan Oleh</h3>
-                                    <h5>nama</h5>
-                                    <span class="badge bg-label-secondary">email</span>
+                                      <h3>Laporan Diajukan</h3>
+                                    <h5>Tanggal pengajuan: {{$data->created_at}}</h5>
                                   </div>
                                 </div>
                               </div>
 
-                              <h5 class="pb-4 border-bottom mb-4">Details</h5>
+                              <h5 class="pb-4 border-bottom mb-4">Detail Pengajuan Laporan</h5>
                               <div class="info-container">
                                 <ul class="list-unstyled mb-6">
+                                    <li class="mb-2">
+                                        <span class="h6">Status Laporan: {{$data->status}}</span>
+                                      </li>
                                   <li class="mb-2">
-                                    <span class="h6">Nama UMKM:</span>
-                                    <span>Nama</span>
+                                    <span class="h6">Kategori Pengajuan: {{$data->nama_kategori}}</span>
                                   </li>
                                   <li class="mb-2">
                                     <span class="h6">Deskripsi :</span>
-                                    <span>deskripsi</span>
+                                    <span>{{$data->deskripsi}}</span>
                                   </li>
                                   <li class="mb-2">
                                     <span class="h6">Tanggal:</span>
-                                    <span>Tanggal</span>
+                                    <span>{{$data->tanggal}}</span>
                                   </li>
                                   <li class="mb-2">
                                     <span class="h6">File Verifikasi:</span>
@@ -97,6 +96,40 @@
                             </div>
                           </div>
                     </div>
+                    @if ($data->status != 'diproses')
+                    <div class="col-12 col-lg-7 mt-2 mb-2">
+                        <div class="card mb-6">
+                            <div class="card-body pt-12">
+                              <div class="user-avatar-section">
+                                <div class="d-flex flex-column">
+                                  <div class="user-info">
+                                      <h3>Detail Sanggahan</h3>
+                                  </div>
+                                </div>
+                              </div>
+                                <div class="info-container">
+                                    <ul class="list-unstyled mb-6">
+
+                                        <li class="mb-2">
+                                          <span class="h6">Deskripsi :</span>
+                                          <span>{{$data->sanggah_deskripsi}}</span>
+                                        </li>
+                                        <li class="mb-2">
+                                          <span class="h6">Bukti Sanggah:</span>
+                                          @php
+
+                                              $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($data->id);
+                                          @endphp
+                                          <span><br><img class="img-fluid w-50 " src="{{ route('image.sanggah.show', ['id' => $encryptedId]) }}" alt="Encrypted Image"></span>
+                                        </li>
+
+                                      </ul>
+                                </div>
+
+                            </div>
+                          </div>
+                    </div>
+                    @endif
 
                 </div>
                 <!-- /.container-fluid -->

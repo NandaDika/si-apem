@@ -35,7 +35,7 @@
         @endif
 
         <!-- Sidebar -->
-        @include('admin.component.sidebar')
+        @include('siswa.component.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -45,7 +45,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include('admin.component.header')
+                @include('siswa.component.header')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->

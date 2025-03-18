@@ -78,9 +78,10 @@ class SiswaController extends Controller
     }
 
     public function getDetailLaporan(Request $request){
-        $deryptedID = Crypt::decrypt($request->id_laporan);
-        $data = Laporan::where('id', $deryptedID)->first();
-
+        $decryptedID = Crypt::decrypt($request->id_laporan);
+        $data = DB::table('laporans')
+        ->join('kategoris', 'laporans.kategori', '=', 'kategoris.id')
+        ->where('laporans.id', $decryptedID)->select('laporans.*', 'kategoris.judul as nama_kategori')->first();
         return view('siswa.detaillaporan', ['data' => $data]);
         dd($deryptedID);
     }
@@ -100,9 +101,26 @@ class SiswaController extends Controller
         ->header('Content-Type', 'image/jpeg');
     }
 
+    public function showEncryptedImage2($id){
+        $decryptedID = Crypt::decrypt($id);
+        $data = Laporan::where('id', $decryptedID)->first();
+        $path = 'private/bukti/' . $data->sanggah_image;
+        if (!Storage::exists($path)) {
+            abort(404, 'File not found');
+        }
+        $encryptedContent = Storage::get($path);
+        $decryptedContent = Crypt::decrypt($encryptedContent);
+
+
+        return response($decryptedContent)
+        ->header('Content-Type', 'image/jpeg');
+    }
+
     public function getDetailSanggah(Request $request){
-        $deryptedID = Crypt::decrypt($request->id_laporan);
-        $data = Laporan::where('id', $deryptedID)->first();
+        $decryptedID = Crypt::decrypt($request->id_laporan);
+        $data = DB::table('laporans')
+        ->join('kategoris', 'laporans.kategori', '=', 'kategoris.id')
+        ->where('laporans.id', $decryptedID)->select('laporans.*', 'kategoris.judul as nama_kategori')->first();
 
         return view('siswa.detailsanggah', ['data' => $data]);
         dd($deryptedID);

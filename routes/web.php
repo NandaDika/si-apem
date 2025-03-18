@@ -35,10 +35,11 @@ Route::middleware(['auth', 'role:siswa'])->group(function(){
     Route::get('/siswa/dashboard', [SiswaController::class, 'index'])->name('siswa.dashboard');
     Route::get('/siswa/lapor', [SiswaController::class, 'pageLaporan'])->name('siswa.lapor');
     Route::post('/siswa/lapor/submit', [SiswaController::class, 'submitLaporan'])->name('siswa.laporan.submit');
-    Route::get('/siswa/riwayat_laporan', [SiswaController::class, 'pageRiwayatLaporan']);
-    Route::get('/siswa/laporan', [SiswaController::class, 'pageDilaporkan']);
+    Route::get('/siswa/riwayat_laporan', [SiswaController::class, 'pageRiwayatLaporan'])->name('siswa.riwayat');
+    Route::get('/siswa/laporan', [SiswaController::class, 'pageDilaporkan'])->name('siswa.dilaporkan');
     Route::post('/siswa/detail_laporan', [SiswaController::class, 'getDetailLaporan'])->name('siswa.laporan.detail');
     Route::get('/image/{id}', [SiswaController::class, 'showEncryptedImage'])->name('image.show');
+    Route::get('/image_sanggah/{id}', [SiswaController::class, 'showEncryptedImage2'])->name('image.sanggah.show');
     Route::post('/siswa/sanggah', [SiswaController::class, 'getDetailSanggah'])->name('siswa.laporan.sanggah');
     Route::post('/siswa/sanggah/update/{id}', [SiswaController::class, 'updateSanggah'])->name('siswa.laporan.sanggah.upload');
 });

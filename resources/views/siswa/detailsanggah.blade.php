@@ -91,7 +91,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @include('admin.component.sidebar')
+        @include('siswa.component.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -101,7 +101,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include('admin.component.header')
+                @include('siswa.component.header')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -118,30 +118,31 @@
                               <div class="user-avatar-section">
                                 <div class="d-flex align-items-center flex-column">
                                   <div class="user-info text-center">
-                                      <h3>Diajukan Oleh</h3>
-                                    <h5>nama</h5>
-                                    <span class="badge bg-label-secondary">email</span>
+                                      <h3>Laporan Diajukan</h3>
+                                    <h5>Tanggal pengajuan: {{$data->created_at}}</h5>
                                   </div>
                                 </div>
                               </div>
 
-                              <h5 class="pb-4 border-bottom mb-4">Details</h5>
+                              <h5 class="pb-4 border-bottom mb-4">Detail Pengajuan Laporan</h5>
                               <div class="info-container">
                                 <ul class="list-unstyled mb-6">
+                                    <li class="mb-2">
+                                        <span class="h6">Status Laporan: {{$data->status}}</span>
+                                      </li>
                                   <li class="mb-2">
-                                    <span class="h6">Nama UMKM:</span>
-                                    <span>Nama</span>
+                                    <span class="h6">Kategori Pengajuan: {{$data->nama_kategori}}</span>
                                   </li>
                                   <li class="mb-2">
                                     <span class="h6">Deskripsi :</span>
-                                    <span>deskripsi</span>
+                                    <span>{{$data->deskripsi}}</span>
                                   </li>
                                   <li class="mb-2">
                                     <span class="h6">Tanggal:</span>
-                                    <span>Tanggal</span>
+                                    <span>{{$data->tanggal}}</span>
                                   </li>
                                   <li class="mb-2">
-                                    <span class="h6">File Verifikasi:</span>
+                                    <span class="h6">Bukti Laporan:</span>
                                     @php
 
                                         $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($data->id);
@@ -172,10 +173,10 @@
                                     <ul class="list-unstyled mb-6">
                                       <li class="mb-2">
                                         <span class="h6">Deskripsi Sanggah:</span>
-                                        <div><textarea name="deskripsi_sanggah" id="" ></textarea></div>
+                                        <div><textarea name="deskripsi_sanggah" id="" class="form-control"></textarea></div>
                                       </li>
                                       <li class="mb-2">
-                                        <span class="h6">Bukti:</span>
+                                        <span class="h6">Bukti Sanggah:</span>
                                         <div class="custom-file-upload text-center align-content-center mt-3">
                                             <label for="file">Bukti Dokumentasi:</label>
                                             <input type="file" name="file" id="file" accept="image/*" onchange="displayFile()" class="absolute inset-0 opacity-0 cursor-pointer" required>

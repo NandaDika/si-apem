@@ -94,7 +94,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @include('admin.component.sidebar')
+        @include('siswa.component.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -104,7 +104,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include('admin.component.header')
+                @include('siswa.component.header')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -112,7 +112,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Laporkan Pelanggaran</h1>
                     </div>
                     @if(session('message'))
                     <div class="alert alert-primary">{{ session('message') }}</div>
@@ -137,7 +137,7 @@
                             <form action="{{route('siswa.laporan.submit')}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div>
-                                        <label for="pelaku">Nama Pelaku:</label>
+                                        <label for="pelaku">Nama Terlapor:</label>
                                     <select id="pelaku" name="id_pelaku" class="form-control select2">
                                         <option value="">-- Pilih nama siswa --</option>
                                         @foreach($users as $id => $nama)
@@ -235,6 +235,7 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <!-- Core plugin JavaScript-->
     <script src="{{asset('assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
