@@ -29,6 +29,7 @@ class AdminController extends Controller
                 'poin' => 0,
                 'kode_guru' => $user['kode_guru'],
                 'password' => bcrypt($user['password'] ?? 'siapem001'),
+                'link_dapodik' => $user['link_dapodik']
             ]);
         }
 

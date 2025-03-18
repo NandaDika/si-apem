@@ -25,8 +25,8 @@ class SiswaController extends Controller
     }
 
     public function submitLaporan(Request $request){
-
-        $terlapor = User::where('id', $request->id_pelaku)->first();
+        //dd($request);
+        $terlapor = User::where('id', Crypt::decrypt($request->id_pelaku))->first();
         $user = Auth::user();
         $request->validate([
             'file' => 'required|image|mimes:jpg,png,jpeg,gif|max:2048',
@@ -45,6 +45,8 @@ class SiswaController extends Controller
             'deskripsi' => $request->deskripsi,
             'kategori' => $request->kategori,
             'image' => $filename,
+            'tanggal' => $request->tanggal,
+            'lokasi' => $request->lokasi,
             'status' => 'diproses',
             'created_at' => now(),
         ]);
@@ -104,5 +106,31 @@ class SiswaController extends Controller
 
         return view('siswa.detailsanggah', ['data' => $data]);
         dd($deryptedID);
+    }
+
+    public function updateSanggah(Request $request, $id){
+        $laporan = Laporan::find(Crypt::decrypt($id));
+
+
+        $request->validate([
+            'file' => 'required|image|mimes:jpg,png,jpeg,gif|max:2048',
+        ]);
+
+        $file = $request->file('file');
+
+        $encryptedFile = Crypt::encrypt(file_get_contents($file));
+        $filename = $file->hashName();
+        Storage::put('/private/bukti/' . $filename, $encryptedFile);
+
+        $laporan->sanggah_deskripsi = $request->deskripsi_sanggah;
+        $laporan->sanggah_image = $filename;
+        $laporan->status = 'disanggah';
+
+        $updateData = $laporan->save();
+        if($updateData){
+            Storage::put('/private/bukti/' . $filename, $encryptedFile);
+        }
+
+        return redirect('/siswa/laporan');
     }
 }

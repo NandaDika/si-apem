@@ -141,17 +141,26 @@
                                     <select id="pelaku" name="id_pelaku" class="form-control select2">
                                         <option value="">-- Pilih nama siswa --</option>
                                         @foreach($users as $id => $nama)
-                                            <option value="{{ $id }}">{{ $nama }}</option>
+                                            <option value="{{ \Illuminate\Support\Facades\Crypt::encrypt($id) }}">{{ $nama }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="description">Deksripsi:</label>
-                                <textarea name="deskripsi" class="col-12"></textarea>
+                                    <label for="lokasi">Lokasi:</label>
+                                <input class="form-control" type="text" name="lokasi" id="lokasi">
                                 </div>
                                 <div>
+                                    <label for="lokasi">Tanggal:</label>
+                                <input class="form-control" type="date" name="tanggal" id="tanggal">
+                                </div>
+                                <div>
+                                    <label for="description">Deksripsi:</label>
+                                <textarea name="deskripsi" class="form-control col-12"></textarea>
+                                </div>
+
+                                <div>
                                     <label for="kategori">Kategori Pelanggaran:</label>
-                                <select id="kategori" name="kategori" class="form-control select2">
+                                <select id="kategori" name="kategori" class="form-control">
                                     <option value="">-- Pilih kategori --</option>
                                     @foreach($kategoris as $id => $judul)
                                         <option value="{{ $id }}">{{ $judul }}</option>

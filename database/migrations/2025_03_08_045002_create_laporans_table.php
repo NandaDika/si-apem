@@ -18,9 +18,13 @@ return new class extends Migration
             $table->uuid('kode_terlapor');
             $table->uuid('kode_guru');
             $table->string('deskripsi');
+            $table->string('lokasi');
+            $table->date('tanggal');
             $table->string('kategori');
             $table->string('image');
             $table->string('status');
+            $table->string('sanggah_deskripsi')->nullable();
+            $table->string('sanggah_image')->nullable();
             $table->timestamps();
         });
     }

@@ -218,6 +218,7 @@
                 poin: row[3] && row[3].trim() !== '' ? row[3] : 0,
                 kode_guru: row[4] && row[4].trim() !== '' ? row[4] : 'SUPERADMIN',
                 password: row[5] ? row[5] : 'siapem001', // Column C (Index 2)
+                link_dapodik: row[6] ? row[6] : 'NULL',
             }));
 
             console.log(formattedData); // Check in console

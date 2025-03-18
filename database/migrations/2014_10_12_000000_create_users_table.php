@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('role');
             $table->integer('poin');
             $table->string('kode_guru');
+            $table->string('link_dapodik')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

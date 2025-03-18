@@ -40,4 +40,5 @@ Route::middleware(['auth', 'role:siswa'])->group(function(){
     Route::post('/siswa/detail_laporan', [SiswaController::class, 'getDetailLaporan'])->name('siswa.laporan.detail');
     Route::get('/image/{id}', [SiswaController::class, 'showEncryptedImage'])->name('image.show');
     Route::post('/siswa/sanggah', [SiswaController::class, 'getDetailSanggah'])->name('siswa.laporan.sanggah');
+    Route::post('/siswa/sanggah/update/{id}', [SiswaController::class, 'updateSanggah'])->name('siswa.laporan.sanggah.upload');
 });

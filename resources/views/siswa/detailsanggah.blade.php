@@ -165,38 +165,41 @@
                                   </div>
                                 </div>
                               </div>
-                              <form action="">
-                              <div class="info-container">
-                                <ul class="list-unstyled mb-6">
-                                  <li class="mb-2">
-                                    <span class="h6">Deskripsi Sanggah:</span>
-                                    <div><textarea name="deskripsi_sanggah" id="" ></textarea></div>
-                                  </li>
-                                  <li class="mb-2">
-                                    <span class="h6">Bukti:</span>
-                                    <div class="custom-file-upload text-center align-content-center mt-3">
-                                        <label for="file">Bukti Dokumentasi:</label>
-                                        <input type="file" name="file" id="file" accept="image/*" onchange="displayFile()" class="absolute inset-0 opacity-0 cursor-pointer" required>
-                                        <label for="file">
-                                            <div id="uploadIcon" class="upload-icon mb-3">
-                                                <i class="fa fa-upload fa-2x"></i>
-                                            </div>
-                                            <h4 style="color: #616161; !important" id="uploadText">Tarik file atau klik untuk mengupload</h4>
-                                            <p id="uploadInstructions">Format: gambar (.jpg, .png, .jpeg) | Max size: 1MB <br>Keamanan data terjamin! Semua file akan dienkripsi oleh sistem.</p>
-                                        </label>
-                                        <p id="file-name" class="mt-2"></p>
-                                        <img id="imagePreview" src="" alt="Image Preview" class="preview-img hidden">
-                                    </div>
-                                  </li>
-                                  <li class="mb-2">
-                                    <button class="btn btn-danger" type="submit">Sanggah</button>
-                                  </li>
+                              @if ($data->status == 'diproses')
+                              <form action="{{route('siswa.laporan.sanggah.upload',  ['id' => $encryptedId])}}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <div class="info-container">
+                                    <ul class="list-unstyled mb-6">
+                                      <li class="mb-2">
+                                        <span class="h6">Deskripsi Sanggah:</span>
+                                        <div><textarea name="deskripsi_sanggah" id="" ></textarea></div>
+                                      </li>
+                                      <li class="mb-2">
+                                        <span class="h6">Bukti:</span>
+                                        <div class="custom-file-upload text-center align-content-center mt-3">
+                                            <label for="file">Bukti Dokumentasi:</label>
+                                            <input type="file" name="file" id="file" accept="image/*" onchange="displayFile()" class="absolute inset-0 opacity-0 cursor-pointer" required>
+                                            <label for="file">
+                                                <div id="uploadIcon" class="upload-icon mb-3">
+                                                    <i class="fa fa-upload fa-2x"></i>
+                                                </div>
+                                                <h4 style="color: #616161; !important" id="uploadText">Tarik file atau klik untuk mengupload</h4>
+                                                <p id="uploadInstructions">Format: gambar (.jpg, .png, .jpeg) | Max size: 1MB <br>Keamanan data terjamin! Semua file akan dienkripsi oleh sistem.</p>
+                                            </label>
+                                            <p id="file-name" class="mt-2"></p>
+                                            <img id="imagePreview" src="" alt="Image Preview" class="preview-img hidden">
+                                        </div>
+                                      </li>
+                                      <li class="mb-2">
+                                        <button class="btn btn-danger" type="submit">Sanggah</button>
+                                      </li>
 
-                                </ul>
+                                    </ul>
 
-                              </div>
+                                  </div>
 
                               </form>
+                              @endif
 
                             </div>
                           </div>
