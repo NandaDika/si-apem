@@ -83,7 +83,6 @@ class SiswaController extends Controller
         ->join('kategoris', 'laporans.kategori', '=', 'kategoris.id')
         ->where('laporans.id', $decryptedID)->select('laporans.*', 'kategoris.judul as nama_kategori')->first();
         return view('siswa.detaillaporan', ['data' => $data]);
-        dd($deryptedID);
     }
 
     public function showEncryptedImage($id){
@@ -123,7 +122,6 @@ class SiswaController extends Controller
         ->where('laporans.id', $decryptedID)->select('laporans.*', 'kategoris.judul as nama_kategori')->first();
 
         return view('siswa.detailsanggah', ['data' => $data]);
-        dd($deryptedID);
     }
 
     public function updateSanggah(Request $request, $id){
