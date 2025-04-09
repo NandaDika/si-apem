@@ -12,8 +12,8 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
-        <a class="nav-link" href="{{route('admin.dashboard')}}">
+    <li class="nav-item {{ Request::routeIs('guru.dashboard') ? 'active' : '' }}">
+        <a class="nav-link" href="{{route('guru.dashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -26,25 +26,11 @@
         Menu
     </div>
 
-    <!-- Nav Item - Charts -->
-    <li class="nav-item {{ Request::routeIs('admin.users') ? 'active' : '' }}">
-        <a class="nav-link" href="{{route('admin.users')}}">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Users</span></a>
-    </li>
-
     <!-- Nav Item - Tables -->
-    <li class="nav-item {{ Request::routeIs('admin.laporan') ? 'active' : '' }}">
-        <a class="nav-link" href="{{route('admin.laporan')}}">
+    <li class="nav-item {{ Request::routeIs('guru.laporan') ? 'active' : '' }}">
+        <a class="nav-link" href="{{route('guru.laporan')}}">
             <i class="fas fa-fw fa-table"></i>
             <span>Laporan</span></a>
-    </li>
-
-    <!-- Nav Item - Tables -->
-    <li class="nav-item {{ Request::routeIs('admin.kategori') ? 'active' : '' }}">
-        <a class="nav-link" href="{{route('admin.kategori')}}">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Kategori</span></a>
     </li>
 
     <!-- Divider -->

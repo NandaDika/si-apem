@@ -14,9 +14,26 @@ use Illuminate\Support\Facades\Storage;
 
 class SiswaController extends Controller
 {
-    public function index(){
-        return view('siswa.index');
-    }
+    public function index()
+{
+    // Ambil user yang sedang login
+    $siswa = Auth::user();
+
+    // Cari nama guru berdasarkan kode_guru
+    $guru = User::where('id', $siswa->kode_guru)->first();
+    $namaGuru = $guru ? $guru->nama : '-';
+
+    // Hitung laporan sebagai pelapor dan terlapor
+    $jumlahMelaporkan = Laporan::where('kode_pelapor', $siswa->id)->count();
+    $jumlahDiterlapor = Laporan::where('kode_terlapor', $siswa->id)->count();
+
+    return view('siswa.index', [
+        'siswa' => $siswa,
+        'namaGuru' => $namaGuru,
+        'jumlahMelaporkan' => $jumlahMelaporkan,
+        'jumlahDiterlapor' => $jumlahDiterlapor,
+    ]);
+}
 
     public function pageLaporan(){
         $users = User::whereNotIn('role', ['superadmin', 'guru'])->whereNotIn('id', [Auth::user()->id])->pluck('nama', 'id');

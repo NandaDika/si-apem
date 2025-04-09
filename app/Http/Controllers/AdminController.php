@@ -9,12 +9,46 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
-    public function index(){
-        return view('admin.index');
-    }
+
+
+    public function getDashboardCounts()
+{
+    $userCount = User::count();
+    $laporanCount = Laporan::count();
+    $kategoriCount = Kategori::count();
+
+    return [
+        'userCount' => $userCount,
+        'laporanCount' => $laporanCount,
+        'kategoriCount' => $kategoriCount,
+    ];
+}
+
+public function index()
+{
+    // Total counts
+    $userCount = User::count();
+    $laporanCount = Laporan::count();
+    $kategoriCount = Kategori::count();
+
+    // Laporan berdasarkan status
+    $laporanDitolak = Laporan::where('status', 'ditolak')->count();
+    $laporanDiterima = Laporan::where('status', 'diterima')->count();
+    $laporanDiproses = Laporan::where('status', 'diproses')->count();
+
+    return view('admin.index', compact(
+        'userCount',
+        'laporanCount',
+        'kategoriCount',
+        'laporanDitolak',
+        'laporanDiterima',
+        'laporanDiproses'
+    ));
+}
 
     public function getUsers(){
         $data = User::all();
@@ -26,8 +60,9 @@ class AdminController extends Controller
         $users = $request->input('users');
 
         foreach ($users as $user) {
+            $randomID = strtoupper(Str::random(3)) . str_pad(rand(0,999), 3, '0', STR_PAD_LEFT);
             User::create([
-                'id' => $user['id'],
+                'id' => $user['id'] ?? $randomID,
                 'nama' => $user['nama'] ?? '',
                 'role' => $user['role'] ?? '',
                 'poin' => 0,

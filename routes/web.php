@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GuruController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
@@ -51,4 +52,13 @@ Route::middleware(['auth', 'role:siswa'])->group(function(){
     Route::get('/image_sanggah/{id}', [SiswaController::class, 'showEncryptedImage2'])->name('image.sanggah.show');
     Route::post('/siswa/sanggah', [SiswaController::class, 'getDetailSanggah'])->name('siswa.laporan.sanggah');
     Route::post('/siswa/sanggah/update/{id}', [SiswaController::class, 'updateSanggah'])->name('siswa.laporan.sanggah.upload');
+});
+
+Route::middleware(['auth', 'role:guru'])->group(function(){
+    Route::get('/guru/dashboard', [GuruController::class, 'index'])->name('guru.dashboard');
+    Route::get('/guru/laporan', [GuruController::class, 'getLaporan'])->name('guru.laporan');
+    Route::post('/guru/detail_laporan', [GuruController::class, 'getDetailLaporan'])->name('guru.laporan.detail');
+    Route::get('guru/image/{id}', [SiswaController::class, 'showEncryptedImage'])->name('guru.image.show');
+    Route::get('guru/image_sanggah/{id}', [SiswaController::class, 'showEncryptedImage2'])->name('guru.image.sanggah.show');
+
 });
