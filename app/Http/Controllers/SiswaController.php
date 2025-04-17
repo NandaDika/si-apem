@@ -46,10 +46,21 @@ class SiswaController extends Controller
         $terlapor = User::where('id', Crypt::decrypt($request->id_pelaku))->first();
         $user = Auth::user();
         $request->validate([
-            'file' => 'required|image|mimes:jpg,png,jpeg,gif|max:2048',
+            'file' => 'required|file',
         ]);
+        $errors = [];
+
+
 
         $file = $request->file('file');
+        $mime = $file->getMimeType();
+        $sizeInKb = $file->getSize() / 1024;
+
+        if((str_starts_with($mime, 'image/') || $mime === 'application/pdf') && $sizeInKb > 1024){
+            return back()->with('message', $file->getClientOriginalName() . ' Melebihi 1MB.');
+        }else if(str_starts_with($mime, 'video/') && $sizeInKb > 10240){
+            return back()->with('message', $file->getClientOriginalName() . ' Melebihi 10MB.');
+        }
 
         $encryptedFile = Crypt::encrypt(file_get_contents($file));
         $filename = $file->hashName();
@@ -99,6 +110,38 @@ class SiswaController extends Controller
         $data = DB::table('laporans')
         ->join('kategoris', 'laporans.kategori', '=', 'kategoris.id')
         ->where('laporans.id', $decryptedID)->select('laporans.*', 'kategoris.judul as nama_kategori')->first();
+        $filedata = strtolower(pathinfo($data->image, PATHINFO_EXTENSION));
+        if (in_array($filedata, ['jpg', 'jpeg', 'png'])) {
+            // Handle image preview
+            $data->contentType = 'image/jpeg';
+        } elseif ($filedata === 'pdf') {
+            // Handle PDF preview
+            $data->contentType = 'application/pdf';
+        } elseif ($filedata === 'mp4') {
+            // Handle video preview
+            $data->contentType = 'video/mp4';
+        } else {
+            // Unknown or unsupported file type
+            abort(415, 'Unsupported Media Type');
+        }
+
+        if ($data->sanggah_image != NULL) {
+            $filedata2 = strtolower(pathinfo($data->sanggah_image, PATHINFO_EXTENSION));
+            if (in_array($filedata2, ['jpg', 'jpeg', 'png'])) {
+                // Handle image preview
+                $data->contentType2 = 'image/jpeg';
+            } elseif ($filedata2 === 'pdf') {
+                // Handle PDF preview
+                $data->contentType2 = 'application/pdf';
+            } elseif ($filedata2 === 'mp4') {
+                // Handle video preview
+                $data->contentType2 = 'video/mp4';
+            } else {
+                // Unknown or unsupported file type
+                abort(415, 'Unsupported Media Type');
+            }
+        }
+
         return view('siswa.detaillaporan', ['data' => $data]);
     }
 
@@ -112,9 +155,10 @@ class SiswaController extends Controller
         $encryptedContent = Storage::get($path);
         $decryptedContent = Crypt::decrypt($encryptedContent);
 
+        $mimeType = finfo_buffer(finfo_open(), $decryptedContent, FILEINFO_MIME_TYPE);
 
         return response($decryptedContent)
-        ->header('Content-Type', 'image/jpeg');
+        ->header('Content-Type', $mimeType);
     }
 
     public function showEncryptedImage2($id){
@@ -127,9 +171,10 @@ class SiswaController extends Controller
         $encryptedContent = Storage::get($path);
         $decryptedContent = Crypt::decrypt($encryptedContent);
 
+        $mimeType = finfo_buffer(finfo_open(), $decryptedContent, FILEINFO_MIME_TYPE);
 
         return response($decryptedContent)
-        ->header('Content-Type', 'image/jpeg');
+        ->header('Content-Type', $mimeType);
     }
 
     public function getDetailSanggah(Request $request){
@@ -138,6 +183,20 @@ class SiswaController extends Controller
         ->join('kategoris', 'laporans.kategori', '=', 'kategoris.id')
         ->where('laporans.id', $decryptedID)->select('laporans.*', 'kategoris.judul as nama_kategori')->first();
 
+        $filedata = strtolower(pathinfo($data->image, PATHINFO_EXTENSION));
+        if (in_array($filedata, ['jpg', 'jpeg', 'png'])) {
+            // Handle image preview
+            $data->contentType = 'image/jpeg';
+        } elseif ($filedata === 'pdf') {
+            // Handle PDF preview
+            $data->contentType = 'application/pdf';
+        } elseif ($filedata === 'mp4') {
+            // Handle video preview
+            $data->contentType = 'video/mp4';
+        } else {
+            // Unknown or unsupported file type
+            abort(415, 'Unsupported Media Type');
+        }
         return view('siswa.detailsanggah', ['data' => $data]);
     }
 
@@ -146,10 +205,18 @@ class SiswaController extends Controller
 
 
         $request->validate([
-            'file' => 'required|image|mimes:jpg,png,jpeg,gif|max:2048',
+            'file' => 'required|file',
         ]);
 
         $file = $request->file('file');
+        $mime = $file->getMimeType();
+        $sizeInKb = $file->getSize() / 1024;
+
+        if((str_starts_with($mime, 'image/') || $mime === 'application/pdf') && $sizeInKb > 1024){
+            return back()->with('message', $file->getClientOriginalName() . ' Melebihi 1MB.');
+        }else if(str_starts_with($mime, 'video/') && $sizeInKb > 10240){
+            return back()->with('message', $file->getClientOriginalName() . ' Melebihi 10MB.');
+        }
 
         $encryptedFile = Crypt::encrypt(file_get_contents($file));
         $filename = $file->hashName();
@@ -164,6 +231,6 @@ class SiswaController extends Controller
             Storage::put('/private/bukti/' . $filename, $encryptedFile);
         }
 
-        return redirect('/siswa/laporan');
+        return redirect('/siswa/laporan')->with('message', 'Laporan berhasil disanggah');
     }
 }

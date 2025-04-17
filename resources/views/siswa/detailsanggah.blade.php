@@ -147,8 +147,18 @@
 
                                         $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($data->id);
                                     @endphp
-                                    <span><br><img class="img-fluid w-50 " src="{{ route('image.show', ['id' => $encryptedId]) }}" alt="Encrypted Image"></span>
-                                  </li>
+                                    <span><br>
+                                        @if ($data->contentType == 'application/pdf')
+                                        <a  target="_blank"  href="{{ route('image.show', ['id' => $encryptedId]) }}"> Buka Dokumen</a>
+                                        @elseif ($data->contentType == 'image/jpeg')
+                                        <img class="img-fluid w-50 " src="{{ route('image.show', ['id' => $encryptedId]) }}" alt="Encrypted Image">
+                                        @elseif ($data->contentType == 'video/mp4')
+                                        <video controls class="img-fluid w-50 ">
+                                            <source src="{{ route('image.show', ['id' => $encryptedId]) }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        @endif
+                                        </span>
 
                                 </ul>
 
@@ -179,13 +189,13 @@
                                         <span class="h6">Bukti Sanggah:</span>
                                         <div class="custom-file-upload text-center align-content-center mt-3">
                                             <label for="file">Bukti Dokumentasi:</label>
-                                            <input type="file" name="file" id="file" accept="image/*" onchange="displayFile()" class="absolute inset-0 opacity-0 cursor-pointer" required>
+                                            <input type="file" name="file" id="file" accept="image/*,video/*,application/pdf" onchange="displayFile()" class="absolute inset-0 opacity-0 cursor-pointer" required>
                                             <label for="file">
                                                 <div id="uploadIcon" class="upload-icon mb-3">
                                                     <i class="fa fa-upload fa-2x"></i>
                                                 </div>
                                                 <h4 style="color: #616161; !important" id="uploadText">Tarik file atau klik untuk mengupload</h4>
-                                                <p id="uploadInstructions">Format: gambar (.jpg, .png, .jpeg) | Max size: 1MB <br>Keamanan data terjamin! Semua file akan dienkripsi oleh sistem.</p>
+                                                <p id="uploadInstructions">Format: (.jpg, .png, .jpeg .mp4 .pdf) | Max size gambar/pdf: 1MB, video: 10MB </p>
                                             </label>
                                             <p id="file-name" class="mt-2"></p>
                                             <img id="imagePreview" src="" alt="Image Preview" class="preview-img hidden">

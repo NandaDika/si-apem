@@ -169,13 +169,13 @@
                             </div>
                                 <div class="custom-file-upload text-center mt-3">
                                     <label for="file">Bukti Dokumentasi:</label>
-                                    <input type="file" name="file" id="file" accept="image/*" onchange="displayFile()" class="absolute inset-0 opacity-0 cursor-pointer" required>
+                                    <input type="file" name="file" id="file" accept="image/*,video/*,application/pdf" onchange="displayFile()" class="absolute inset-0 opacity-0 cursor-pointer" required>
                                     <label for="file">
                                         <div id="uploadIcon" class="upload-icon mb-3">
                                             <i class="fa fa-upload fa-2x"></i>
                                         </div>
                                         <h4 style="color: #616161; !important" id="uploadText">Tarik file atau klik untuk mengupload</h4>
-                                        <p id="uploadInstructions">Format: gambar (.jpg, .png, .jpeg) | Max size: 1MB <br>Keamanan data terjamin! Semua file akan dienkripsi oleh sistem.</p>
+                                        <p id="uploadInstructions">Format: (.jpg, .png, .jpeg .mp4 .pdf) | Max size gambar/pdf: 1MB, video: 10MB </p>
                                     </label>
                                     <p id="file-name" class="mt-2"></p>
                                     <img id="imagePreview" src="" alt="Image Preview" class="preview-img hidden">

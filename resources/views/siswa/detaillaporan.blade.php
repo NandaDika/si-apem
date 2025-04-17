@@ -87,7 +87,18 @@
 
                                         $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($data->id);
                                     @endphp
-                                    <span><br><img class="img-fluid w-50 " src="{{ route('image.show', ['id' => $encryptedId]) }}" alt="Encrypted Image"></span>
+                                    <span><br>
+                                    @if ($data->contentType == 'application/pdf')
+                                    <a  target="_blank"  href="{{ route('image.show', ['id' => $encryptedId]) }}"> Buka Dokumen</a>
+                                    @elseif ($data->contentType == 'image/jpeg')
+                                    <img class="img-fluid w-50 " src="{{ route('image.show', ['id' => $encryptedId]) }}" alt="Encrypted Image">
+                                    @elseif ($data->contentType == 'video/mp4')
+                                    <video controls class="img-fluid w-50 ">
+                                        <source src="{{ route('image.show', ['id' => $encryptedId]) }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    @endif
+                                    </span>
                                   </li>
 
                                 </ul>
@@ -120,7 +131,18 @@
 
                                               $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($data->id);
                                           @endphp
-                                          <span><br><img class="img-fluid w-50 " src="{{ route('image.sanggah.show', ['id' => $encryptedId]) }}" alt="Encrypted Image"></span>
+                                          <span><br>
+                                            @if ($data->contentType2 == 'application/pdf')
+                                            <a  target="_blank"  href="{{ route('image.sanggah.show', ['id' => $encryptedId]) }}"> Buka Dokumen</a>
+                                            @elseif ($data->contentType2 == 'image/jpeg')
+                                            <img class="img-fluid w-50 " src="{{ route('image.sanggah.show', ['id' => $encryptedId]) }}" alt="Encrypted Image">
+                                            @elseif ($data->contentType2 == 'video/mp4')
+                                            <video controls class="img-fluid w-50 ">
+                                                <source src="{{ route('image.sanggah.show', ['id' => $encryptedId]) }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            @endif
+                                            </span>
                                         </li>
 
                                       </ul>

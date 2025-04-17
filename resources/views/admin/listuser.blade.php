@@ -104,7 +104,9 @@
                                     <tbody>
                                         @foreach ($users as $user)
                                         <tr>
-                                            <td><input type="checkbox" name="ids[]" value="{{$user->id}}"></td>
+                                            <td>@if ($user->role != 'superadmin')
+                                                <input type="checkbox" name="ids[]" value="{{$user->id}}">
+                                            @endif</td>
                                             <td>{{$user->id}}</td>
                                             <td>{{$user->nama}}</td>
                                             <td>{{$user->role}}</td>
