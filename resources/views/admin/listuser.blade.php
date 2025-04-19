@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>User | SI APEM</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -40,6 +40,16 @@
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
+            <div class="modal fade show" id="loadingModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" style="display: none; z-index: 9999;">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content text-center">
+                    <div class="modal-body py-5 bg-white">
+                      <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
+                      <p class="mb-0 fs-5 text-secondary">Processing your request...</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             <!-- Main Content -->
             <div id="content">
@@ -195,6 +205,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script>
         function importExcel() {
+            let loadingModal;
+
+            const modalEl = document.getElementById('loadingModal');
+            modalEl.style.display = 'block';
+
+            // Ensure modal is shown manually (non-dismissible)
+            loadingModal = new bootstrap.Modal(modalEl, {
+            backdrop: 'static',
+            keyboard: false
+            });
+
+        loadingModal.show();
+
         let fileInput = document.getElementById("excelFile");
         let file = fileInput.files[0];
 
@@ -241,7 +264,7 @@
     function sendToServer(sheetData) {
     console.log("Data Inside sendToServer():", sheetData);
 
-    fetch("http://192.168.88.254:8000/users/import", {
+    fetch("/users/import", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

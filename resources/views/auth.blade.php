@@ -1,95 +1,61 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login | SI APEM</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="assets/font/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="assets/font/icon-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="assets/vendor/animate/animate.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="assets/vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="assets/vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="assets/vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="assets/vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="dataAuth/util.css">
-	<link rel="stylesheet" type="text/css" href="dataAuth/main.css">
-<!--===============================================================================================-->
-<meta name="robots" content="noindex, follow">
+<link href="assets/img/smada.ico  " rel="icon">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | SI APEM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/framer-motion"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-image: url("assets/img/smada.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      min-height: 100vh;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .glass {
+      background: linear-gradient(135deg,rgba(16, 188, 105, 0.7),rgba(14, 128, 73, 0.7));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 1.5rem;
+      border: 1px solid rgb(0, 189, 3);
+    }
+  </style>
 </head>
-<body>
+<body class="flex items-center justify-center px-6 py-10">
+  <div class="w-full max-w-md glass p-8 shadow-2xl text-white animate-fadeIn">
+    <h2 class="text-3xl font-bold text-center mb-6 tracking-wide">👨‍💻 Login</h2>
+    <form action="{{route('login')}}" method="POST" class="space-y-6">
+      @csrf
+      <div>
+        <label for="id" class="block text-sm mb-2">User ID</label>
+        <input type="text" name="id" placeholder="Enter your ID" required
+          class="w-full px-4 py-3 rounded-xl bg-gray-800 bg-opacity-60 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-300"/>
+      </div>
 
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 p-t-50 p-b-90">
-				<form action="/auth" method="POST" class="login100-form validate-form flex-sb flex-w">
-                    @csrf
-					<span class="login100-form-title p-b-51">
-						SI APEM
-					</span>
+      <div>
+        <label for="password" class="block text-sm mb-2">Password</label>
+        <input type="password" name="password" placeholder="••••••••" required
+          class="w-full px-4 py-3 rounded-xl bg-gray-800 bg-opacity-60 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-300"/>
+      </div>
 
+      <button type="submit"
+        class="w-full py-3 mt-4 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-blue-500 text-white font-semibold text-lg shadow-lg transform hover:scale-105 transition duration-300">
+        🔐 Login
+      </button>
+    </form>
+  </div>
 
-					<div class="wrap-input100 validate-input m-b-16" data-validate = "Username is required">
-						<input class="input100" type="text" name="id" placeholder="Id">
-						<span class="focus-input100"></span>
-					</div>
-
-
-					<div class="wrap-input100 validate-input m-b-16" data-validate = "Password is required">
-						<input class="input100" type="password" name="password" placeholder="Password">
-						<span class="focus-input100"></span>
-					</div>
-
-					<div class="container-login100-form-btn m-t-17">
-						<button type="submit" class="login100-form-btn">
-							Login
-						</button>
-					</div>
-
-				</form>
-			</div>
-		</div>
-	</div>
-
-
-	<div id="dropDownSelect1"></div>
-
-<!--===============================================================================================-->
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/daterangepicker/moment.min.js"></script>
-	<script src="vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-	<script src="js/main.js"></script>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'UA-23581568-13');
-	</script>
+  <!-- Animation (Optional using Animate.css) -->
+  <script>
+    document.querySelector('.glass').classList.add('animate__animated', 'animate__fadeInDown');
+  </script>
 </body>
 </html>
