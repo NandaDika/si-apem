@@ -21,6 +21,26 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/hal-sekolah', function () {
+    return view('sekolah');
+});
+
+Route::get('/kewajiban', function () {
+    return view('kewajiban');
+});
+
+Route::get('/larangan', function () {
+    return view('larangan');
+});
+
+Route::get('/hak', function () {
+    return view('hak');
+});
+
+Route::get('/lainnya', function () {
+    return view('lain');
+});
+
 Route::get('auth', [PublicController::class, 'getAuth']);
 Route::post('auth', [PublicController::class, 'login'])->name('login');
 Route::post('/logout', [PublicController::class, 'logout'])->name('logout');

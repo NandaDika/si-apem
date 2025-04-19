@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
         User::create([
             'id' => 'UUID13', // Example user ID
             'nama' => 'John Doe',
-            'role' => 'user',
+            'role' => 'superadmin',
             'poin' => 14,
             'kode_guru' => '1109',
             'password' => Hash::make('nanda'), // Hashing the password
