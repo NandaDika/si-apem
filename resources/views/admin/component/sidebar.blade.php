@@ -27,11 +27,13 @@
     </div>
 
     <!-- Nav Item - Charts -->
+    @if (Auth::user()->role == 'superadmin')
     <li class="nav-item {{ Request::routeIs('admin.users') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('admin.users')}}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Users</span></a>
     </li>
+    @endif
 
     <!-- Nav Item - Tables -->
     <li class="nav-item {{ Request::routeIs('admin.laporan') ? 'active' : '' }}">
@@ -41,11 +43,15 @@
     </li>
 
     <!-- Nav Item - Tables -->
+
+
+    @if (Auth::user()->role == 'superadmin')
     <li class="nav-item {{ Request::routeIs('admin.kategori') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('admin.kategori')}}">
             <i class="fas fa-fw fa-table"></i>
             <span>Kategori</span></a>
     </li>
+    @endif
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

@@ -45,20 +45,21 @@ Route::get('auth', [PublicController::class, 'getAuth']);
 Route::post('auth', [PublicController::class, 'login'])->name('login');
 Route::post('/logout', [PublicController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth', 'role:superadmin'])->group(function () {
+Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/user', [AdminController::class, 'getUsers'])->name('admin.users');
-    Route::post('/users/import', [AdminController::class, 'import'])->name('users.import');
-    Route::delete('/users/delete-multiple', [AdminController::class, 'deleteMultiple'])->name('users.deleteMultiple');
+    Route::get('/admin/user', [AdminController::class, 'getUsers'])->name('admin.users')->middleware('onlyadmin');
+    Route::post('/users/import', [AdminController::class, 'import'])->name('users.import')->middleware('onlyadmin');
+    Route::delete('/users/delete-multiple', [AdminController::class, 'deleteMultiple'])->name('users.deleteMultiple')->middleware('onlyadmin');
     Route::get('/admin/laporan', [AdminController::class, 'getLaporan'])->name('admin.laporan');
     Route::post('/admin/detail_laporan', [AdminController::class, 'getDetailLaporan'])->name('admin.laporan.detail');
     Route::get('admin/image/{id}', [SiswaController::class, 'showEncryptedImage'])->name('admin.image.show');
     Route::get('admin/image_sanggah/{id}', [SiswaController::class, 'showEncryptedImage2'])->name('admin.image.sanggah.show');
-    Route::post('/kategori/import', [AdminController::class, 'importKategori'])->name('kategori.import');
-    Route::get('/admin/kategori', [AdminController::class, 'getKategori'])->name('admin.kategori');
-    Route::delete('/kategori/delete-multiple', [AdminController::class, 'deleteMultipleKategori'])->name('kategori.deleteMultiple');
+    Route::post('/kategori/import', [AdminController::class, 'importKategori'])->name('kategori.import')->middleware('onlyadmin');
+    Route::get('/admin/kategori', [AdminController::class, 'getKategori'])->name('admin.kategori')->middleware('onlyadmin');
+    Route::delete('/kategori/delete-multiple', [AdminController::class, 'deleteMultipleKategori'])->name('kategori.deleteMultiple')->middleware('onlyadmin');
     Route::post('/admin/laporan/tolak/{id}', [AdminController::class, 'tolakLaporan'])->name('admin.tolak');
     Route::post('/admin/laporan/terima/{id}', [AdminController::class, 'terimaLaporan'])->name('admin.terima');
+    Route::get('/admin/401', function(){return view('admin.notauth');})->name('admin.notauth');
 });
 
 Route::middleware(['auth', 'role:siswa'])->group(function(){
@@ -80,5 +81,4 @@ Route::middleware(['auth', 'role:guru'])->group(function(){
     Route::post('/guru/detail_laporan', [GuruController::class, 'getDetailLaporan'])->name('guru.laporan.detail');
     Route::get('guru/image/{id}', [SiswaController::class, 'showEncryptedImage'])->name('guru.image.show');
     Route::get('guru/image_sanggah/{id}', [SiswaController::class, 'showEncryptedImage2'])->name('guru.image.sanggah.show');
-
 });
