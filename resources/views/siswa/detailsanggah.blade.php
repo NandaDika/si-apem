@@ -8,8 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link href="{{asset('assets/img/smada.ico')}}" rel="icon">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Sanggah Laporan | SI APEM</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -225,7 +226,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        Website ini dikelola oleh pihak <a href="https://smadapare.sch.id/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
                     </div>
                 </div>
             </footer>

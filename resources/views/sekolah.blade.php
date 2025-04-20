@@ -39,7 +39,7 @@
       <!-- Toggler -->
       <button class="navbar-toggler navbar-toggler-icon" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
         aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class=" mobile-nav-toggle"></span> 
+        <span class=" mobile-nav-toggle"></span>
       </button>
 
       <!-- Nav Items -->
@@ -139,7 +139,7 @@
   <footer id="footer" class="footer">
     <div class="container copyright text-center mt-4">
       <div class="credits">
-      Website ini dikelola oleh pihak <a href="https://bootstrapmade.com/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
+        Website ini dikelola oleh pihak <a href="https://smadapare.sch.id/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
 
       </div>
     </div>

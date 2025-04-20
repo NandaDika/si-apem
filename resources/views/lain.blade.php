@@ -97,7 +97,7 @@
 <footer class="footer mt-5 py-4 border-top bg-light text-center">
   <div class="container">
     <span class="small">
-    Website ini dikelola oleh pihak <a href="https://bootstrapmade.com/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
+        Website ini dikelola oleh pihak <a href="https://smadapare.sch.id/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
 
     </span>
   </div>

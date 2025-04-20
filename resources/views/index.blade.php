@@ -250,11 +250,7 @@
   <div class="container copyright text-center mt-4">
     <!-- <p>© <span>Hak Cipta</span> <strong class="px-1 sitename">eNno</strong> <span>Hak Cipta Dilindungi</span></p> -->
     <div class="credits">
-      <!-- Semua tautan di footer harus tetap utuh. -->
-      <!-- Anda dapat menghapus tautan hanya jika Anda membeli versi pro. -->
-      <!-- Informasi lisensi: https://bootstrapmade.com/license/ -->
-      <!-- Beli versi pro dengan formulir kontak PHP/AJAX yang berfungsi: [buy-url] -->
-      Website ini dikelola oleh pihak <a href="https://bootstrapmade.com/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
+        Website ini dikelola oleh pihak <a href="https://smadapare.sch.id/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
     </div>
   </div>
 </footer>
