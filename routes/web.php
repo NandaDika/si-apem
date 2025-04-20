@@ -48,6 +48,18 @@ Route::post('/logout', [PublicController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/user', [AdminController::class, 'getUsers'])->name('admin.users')->middleware('onlyadmin');
+    Route::get('/admin/user/create', [AdminController::class, 'createUser'])->name('admin.user.create')->middleware('onlyadmin');
+    Route::post('/admin/user/store', [AdminController::class, 'storeUser'])->name('admin.user.store')->middleware('onlyadmin');
+    // Route untuk menampilkan form edit
+    Route::get('/admin/user/{id}/edit', [AdminController::class, 'editUser'])->name('admin.user.edit')->middleware('onlyadmin');
+    // Route untuk memproses update data
+    Route::post('/admin/user/change-password', [AdminController::class, 'showChangePasswordForm'])
+    ->name('admin.user.change-password')
+    ->middleware('onlyadmin');
+    // Tampilkan form ubah password
+    Route::post('/admin/user/change-password', [AdminController::class, 'showChangePasswordForm'])->name('admin.user.change-password')->middleware('onlyadmin');
+    // Proses form ubah password
+    Route::post('/admin/user/{id}/change-password', [AdminController::class, 'changePassword'])->name('admin.user.update-password')->middleware('onlyadmin');
     Route::post('/users/import', [AdminController::class, 'import'])->name('users.import')->middleware('onlyadmin');
     Route::delete('/users/delete-multiple', [AdminController::class, 'deleteMultiple'])->name('users.deleteMultiple')->middleware('onlyadmin');
     Route::get('/admin/laporan', [AdminController::class, 'getLaporan'])->name('admin.laporan');
@@ -65,6 +77,10 @@ Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
 Route::middleware(['auth', 'role:siswa'])->group(function(){
     Route::get('/siswa/dashboard', [SiswaController::class, 'index'])->name('siswa.dashboard');
     Route::get('/siswa/lapor', [SiswaController::class, 'pageLaporan'])->name('siswa.lapor');
+     // Tampilkan form ubah password
+    Route::post('/siswa/change-password', [SiswaController::class, 'showChangePasswordForm'])->name('siswa.change-password');
+     // Proses form ubah password
+    Route::post('/siswa/{id}/change-password', [SiswaController::class, 'changePassword'])->name('siswa.update-password');
     Route::post('/siswa/lapor/submit', [SiswaController::class, 'submitLaporan'])->name('siswa.laporan.submit');
     Route::get('/siswa/riwayat_laporan', [SiswaController::class, 'pageRiwayatLaporan'])->name('siswa.riwayat');
     Route::get('/siswa/laporan', [SiswaController::class, 'pageDilaporkan'])->name('siswa.dilaporkan');
@@ -78,6 +94,10 @@ Route::middleware(['auth', 'role:siswa'])->group(function(){
 Route::middleware(['auth', 'role:guru'])->group(function(){
     Route::get('/guru/dashboard', [GuruController::class, 'index'])->name('guru.dashboard');
     Route::get('/guru/laporan', [GuruController::class, 'getLaporan'])->name('guru.laporan');
+    // Tampilkan form ubah password
+    Route::post('/guru/change-password', [GuruController::class, 'showChangePasswordForm'])->name('guru.change-password');
+    // Proses form ubah password
+    Route::post('/guru/{id}/change-password', [GuruController::class, 'changePassword'])->name('guru.update-password');
     Route::post('/guru/detail_laporan', [GuruController::class, 'getDetailLaporan'])->name('guru.laporan.detail');
     Route::get('guru/image/{id}', [SiswaController::class, 'showEncryptedImage'])->name('guru.image.show');
     Route::get('guru/image_sanggah/{id}', [SiswaController::class, 'showEncryptedImage2'])->name('guru.image.sanggah.show');

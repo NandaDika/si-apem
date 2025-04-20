@@ -60,7 +60,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Data Pengguna</h1>
+                    <!-- <h1 class="h3 mb-2 text-gray-800">Data Pengguna</h1> -->
 
                             @if(session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
@@ -70,68 +70,46 @@
                             <div class="alert alert-danger">{{ session('error') }}</div>
                         @endif
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex justify-content-between">
+                    <form method="POST" action="{{ route('admin.user.update-password', $user->id) }}">
+                        @csrf
 
-                            <div>
-                           <a class=' btn btn-primary text-white' href='./user/create'>Create</a>
-                            <a role="button" href="" class="btn btn-success" data-toggle="modal" data-target="#importModal">Import data</a>
-                                <button type="button" class="btn btn-danger" onclick="document.getElementById('delete-form').submit();">
-                                    Hapus Terpilih
-                                </button>
+                        <div class="form-group">
+                            <label for="current_password">Password Saat Ini</label>
+                            <input type="password" name="current_password" class="form-control" required>
+                            @error('current_password')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new_password">Password Baru</label>
+                            <input type="password" name="new_password" class="form-control" required>
+                            @error('new_password')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new_password_confirmation">Konfirmasi Password Baru</label>
+                            <input type="password" name="new_password_confirmation" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="human_check">Centang kotak ini untuk melanjutkan</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="human_check" id="human_check" required>
+                                <label class="form-check-label" for="human_check">
+                                    Saya bukan robot
+                                </label>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <form id="delete-form" action="{{route('users.deleteMultiple')}}" method="POST" >
-                                    @csrf
-                                    @method('DELETE')
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th><input type="checkbox" id="select-all"></th>
-                                            <th>ID</th>
-                                            <th>Nama</th>
-                                            <th>Role</th>
-                                            <th>Kode Guru</th>
-                                            <th>Poin</th>
-                                            <th>Opsi</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nama</th>
-                                            <th>Role</th>
-                                            <th>Kode Guru</th>
-                                            <th>Poin</th>
-                                            <th>Opsi</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        @foreach ($users as $user)
-                                        <tr>
-                                            <td>@if ($user->role != 'superadmin')
-                                                <input type="checkbox" name="ids[]" value="{{$user->id}}">
-                                            @endif</td>
-                                            <td>{{$user->id}}</td>
-                                            <td>{{$user->nama}}</td>
-                                            <td>{{$user->role}}</td>
-                                            <td>{{$user->kode_guru}}</td>
-                                            <td>{{$user->poin}}</td>
-                                            <td>
-                                                <a href='./user/{{$user->id}}/edit' class="btn btn-warning">Edit</a> 
-                                            </td>
-                                        </tr>
-                                        @endforeach
 
-                                    </tbody>
-                                </table>
-                            </form>
 
-                            </div>
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-primary">Ubah Password</button>
+                        <a href="{{ route('admin.users') }}" class="btn btn-secondary">Batal</a>
+                    </form>
+
+
 
                 </div>
                 <!-- /.container-fluid -->
