@@ -35,6 +35,7 @@
                 <img class="img-profile rounded-circle"
                     src="https://static.vecteezy.com/system/resources/thumbnails/000/439/863/small/Basic_Ui__28186_29.jpg">
             </a>
+           
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="userDropdown">
@@ -55,6 +56,18 @@
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Logout
                 </a>
+                <div >
+                <form id="changePasswordForm" action="{{ route('admin.user.change-password') }}" method="POST" style="display: none;">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ Crypt::encrypt(Auth::id()) }}">
+                </form>
+
+                <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('changePasswordForm').submit();">
+                    <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i> Change Password
+                </a>
+
+               </div>
+
             </div>
         </li>
 

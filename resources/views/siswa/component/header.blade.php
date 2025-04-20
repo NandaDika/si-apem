@@ -170,6 +170,17 @@
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Logout
                 </a>
+               <div >
+                <form action="{{route('siswa.change-password')}}" method="POST">
+                    @csrf
+                    @php
+                        $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt(Auth::id());
+                    @endphp
+                    <input type="hidden" name="id" value="{{$encryptedId}}">
+                    <button class="dropdown-item" role="submit"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Change Password</button>
+                </form>
+               </div>
             </div>
         </li>
 

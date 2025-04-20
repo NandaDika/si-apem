@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Models\Kategori;
 use App\Models\Laporan;
@@ -55,6 +55,101 @@ public function index()
         //dd($data);
         return view('admin.listuser', ['users' => $data]);
     }
+
+        public function createUser()
+    {
+        return view('admin.createuser'); // sebelumnya 'createuser', sekarang jadi 'tambahuser'
+    }
+
+        public function storeUser(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|unique:users,id',
+            'nama' => 'required|string',
+            'role' => 'required|in:siswa,guru,superadmin',
+            'kode_guru' => 'nullable|string',
+            'poin' => 'required|integer|min:0',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        User::create([
+            'id' => $request->id,
+            'nama' => $request->nama,
+            'role' => $request->role,
+            'kode_guru' => $request->kode_guru,
+            'poin' => $request->poin,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('admin.users')->with('success', 'User berhasil ditambahkan.');
+    }
+
+        public function editUser($id)
+    {
+        // Ambil data user berdasarkan id
+        $user = User::findOrFail($id);
+
+        // Kirim data user ke view
+        return view('admin.edituser', compact('user'));
+    }
+
+        public function updateUser(Request $request, $id)
+    {
+        // Validasi data input
+        $request->validate([
+            'id' => 'required|unique:users,id,' . $id,  // Menambahkan pengecualian pada ID yang sedang diperbarui
+            'nama' => 'required|string',
+            'role' => 'required|in:siswa,guru,superadmin',
+            'kode_guru' => 'nullable|string',
+            'poin' => 'required|integer|min:0',
+            'password' => 'nullable|string|min:8|confirmed', // Password opsional saat update
+        ]);
+
+        // Ambil data user berdasarkan id
+        $user = User::findOrFail($id);
+
+        // Update data user
+        $user->update([
+            'id' => $request->id,
+            'nama' => $request->nama,
+            'role' => $request->role,
+            'kode_guru' => $request->kode_guru,
+            'poin' => $request->poin,
+            'password' => $request->password ? Hash::make($request->password) : $user->password, // Jika password kosong, gunakan yang lama
+        ]);
+
+        // Redirect ke halaman daftar user dengan pesan sukses
+        return redirect()->route('admin.users')->with('success', 'User berhasil diperbarui.');
+    }
+
+    public function showChangePasswordForm(Request $request)
+        {
+            $id = Crypt::decrypt($request->id);
+            $user = User::findOrFail($id);
+            return view('admin.change-password', compact('user'));
+        }
+    
+
+    public function changePassword(Request $request, $id)
+        {
+            $request->validate([
+                'current_password' => 'required',
+                'new_password' => 'required|string|min:8|confirmed',
+                'human_check' => 'accepted',
+            ]);
+
+            $user = User::findOrFail($id);
+
+            if (!Hash::check($request->current_password, $user->password)) {
+                return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
+            }
+
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+
+            return redirect()->route('admin.users')->with('success', 'Password berhasil diperbarui.');
+        }
+
 
     public function import(Request $request){
         $users = $request->input('users');

@@ -60,7 +60,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Data Pengguna</h1>
+                    <!-- <h1 class="h3 mb-2 text-gray-800">Data Pengguna</h1> -->
 
                             @if(session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
@@ -71,67 +71,84 @@
                         @endif
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex justify-content-between">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Tambah Data User</h6>
+                </div>
+                <div class="card-body">
+                <form action="{{ route('admin.user.store') }}" method="POST">
+                    @csrf
 
-                            <div>
-                           <a class=' btn btn-primary text-white' href='./user/create'>Create</a>
-                            <a role="button" href="" class="btn btn-success" data-toggle="modal" data-target="#importModal">Import data</a>
-                                <button type="button" class="btn btn-danger" onclick="document.getElementById('delete-form').submit();">
-                                    Hapus Terpilih
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <form id="delete-form" action="{{route('users.deleteMultiple')}}" method="POST" >
-                                    @csrf
-                                    @method('DELETE')
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th><input type="checkbox" id="select-all"></th>
-                                            <th>ID</th>
-                                            <th>Nama</th>
-                                            <th>Role</th>
-                                            <th>Kode Guru</th>
-                                            <th>Poin</th>
-                                            <th>Opsi</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nama</th>
-                                            <th>Role</th>
-                                            <th>Kode Guru</th>
-                                            <th>Poin</th>
-                                            <th>Opsi</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        @foreach ($users as $user)
-                                        <tr>
-                                            <td>@if ($user->role != 'superadmin')
-                                                <input type="checkbox" name="ids[]" value="{{$user->id}}">
-                                            @endif</td>
-                                            <td>{{$user->id}}</td>
-                                            <td>{{$user->nama}}</td>
-                                            <td>{{$user->role}}</td>
-                                            <td>{{$user->kode_guru}}</td>
-                                            <td>{{$user->poin}}</td>
-                                            <td>
-                                                <a href='./user/{{$user->id}}/edit' class="btn btn-warning">Edit</a> 
-                                            </td>
-                                        </tr>
-                                        @endforeach
-
-                                    </tbody>
-                                </table>
-                            </form>
-
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="id">NIS / NIP</label>
+                        <input type="text" name="id" id="id" class="form-control" required value="{{ old('id') }}">
+                        @if($errors->has('id'))
+                            <div class="text-danger">{{ $errors->first('id') }}</div>
+                        @endif
                     </div>
+
+                    <div class="form-group">
+                        <label for="nama">Nama</label>
+                        <input type="text" name="nama" id="nama" class="form-control" required value="{{ old('nama') }}">
+                        @if($errors->has('nama'))
+                            <div class="text-danger">{{ $errors->first('nama') }}</div>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role">Role</label>
+                        <select name="role" id="role" class="form-control" required>
+                            <option value="">-- Pilih Role --</option>
+                            <option value="siswa" {{ old('role') == 'siswa' ? 'selected' : '' }}>Siswa</option>
+                            <option value="guru" {{ old('role') == 'guru' ? 'selected' : '' }}>Guru</option>
+                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                        </select>
+                        @if($errors->has('role'))
+                            <div class="text-danger">{{ $errors->first('role') }}</div>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kode_guru">Kode Guru</label>
+                        <input type="text" name="kode_guru" id="kode_guru" class="form-control" value="{{ old('kode_guru') }}">
+                        @if($errors->has('kode_guru'))
+                            <div class="text-danger">{{ $errors->first('kode_guru') }}</div>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="poin">Poin</label>
+                        <input type="number" name="poin" id="poin" class="form-control" required min="0" value="{{ old('poin') }}">
+                        @if($errors->has('poin'))
+                            <div class="text-danger">{{ $errors->first('poin') }}</div>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="form-control" required>
+                        @if($errors->has('password'))
+                            <div class="text-danger">{{ $errors->first('password') }}</div>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password_confirmation">Konfirmasi Password</label>
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
+                        @if($errors->has('password_confirmation'))
+                            <div class="text-danger">{{ $errors->first('password_confirmation') }}</div>
+                        @endif
+                    </div>
+
+                    <div class="text-right">
+                        <a href="{{ route('admin.users') }}" class="btn btn-secondary">Batal</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+
+                </div>
+            </div>
+
+
 
                 </div>
                 <!-- /.container-fluid -->

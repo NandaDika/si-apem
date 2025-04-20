@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Hash;
 
 use App\Http\Controllers\Controller;
 use App\Models\Laporan;
@@ -27,6 +28,35 @@ class GuruController extends Controller
         return view('guru.listriwayat', ['users' => $data]);
         dd($data);
     }
+
+    public function showChangePasswordForm(Request $request)
+        {
+            $id = Crypt::decrypt($request->id);
+            $user = User::findOrFail($id);
+            return view('guru.change-password', compact('user'));
+        }
+    
+
+    public function changePassword(Request $request, $id)
+        {
+            $request->validate([
+                'current_password' => 'required',
+                'new_password' => 'required|string|min:8|confirmed',
+                'human_check' => 'accepted',
+            ]);
+
+            $user = User::findOrFail($id);
+
+            if (!Hash::check($request->current_password, $user->password)) {
+                return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
+            }
+
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+
+            return redirect()->route('guru.dashboard')->with('success', 'Password berhasil diperbarui.');
+        }
+
 
     public function getDetailLaporan(Request $request){
         $decryptedID = Crypt::decrypt($request->id_laporan);
