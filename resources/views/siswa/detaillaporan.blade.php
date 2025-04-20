@@ -69,6 +69,9 @@
                               <div class="info-container">
                                 <ul class="list-unstyled mb-6">
                                     <li class="mb-2">
+                                        <span class="h6">Nama Terlapor: {{$data->nama_terlapor}}</span>
+                                      </li>
+                                    <li class="mb-2">
                                         <span class="h6">Status Laporan: {{$data->status}}</span>
                                       </li>
                                   <li class="mb-2">

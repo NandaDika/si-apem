@@ -13,6 +13,8 @@
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -103,7 +105,7 @@
         <div class="col-md-12">
           <div class="card shadow-sm border-0">
             <div class="card-body">
-              <h5 class="card-title"><i class="bi bi-handshake me-2 text-success"></i>Menumbuhkan Kekeluargaan</h5>
+              <h5 class="card-title"><i class="fas fa-handshake me-2 text-success"></i>Menumbuhkan Kekeluargaan</h5>
               <p class="card-text">Peserta didik wajib menumbuhkan dan memelihara rasa kekeluargaan sesama warga sekolah.</p>
             </div>
           </div>

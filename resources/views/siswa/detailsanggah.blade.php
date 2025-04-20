@@ -53,7 +53,6 @@
 
 .custom-file-upload input[type="file"] {
     opacity: 0;
-    position: absolute;
     width: 100%;
     height: 100%;
     cursor: pointer;

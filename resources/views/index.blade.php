@@ -212,7 +212,7 @@
             </li>
           </ul>
 
-            <a class="btn btn-primary btn-lg mt-4 px-4 shadow instagram-btn" href="#" style="border-radius: 30px;">
+            <a class="btn btn-primary btn-lg mt-4 px-4 shadow instagram-btn" href="https://www.instagram.com/smadapare.official/" style="border-radius: 30px;">
           <i class="bi bi-instagram me-2"></i> Kunjungi Instagram Sekolah
             </a>
 

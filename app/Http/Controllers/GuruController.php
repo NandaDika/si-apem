@@ -32,7 +32,8 @@ class GuruController extends Controller
         $decryptedID = Crypt::decrypt($request->id_laporan);
         $data = DB::table('laporans')
         ->join('kategoris', 'laporans.kategori', '=', 'kategoris.id')
-        ->where('laporans.id', $decryptedID)->select('laporans.*', 'kategoris.judul as nama_kategori')->first();
+        ->join('users', 'users.id', '=', 'laporans.kode_terlapor')
+        ->where('laporans.id', $decryptedID)->select('laporans.*', 'kategoris.judul as nama_kategori', 'users.nama as nama_terlapor')->first();
         $filedata = strtolower(pathinfo($data->image, PATHINFO_EXTENSION));
         if (in_array($filedata, ['jpg', 'jpeg', 'png'])) {
             // Handle image preview
