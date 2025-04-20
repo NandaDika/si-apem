@@ -36,7 +36,7 @@ class SiswaController extends Controller
 }
 
     public function pageLaporan(){
-        $users = User::whereNotIn('role', ['superadmin', 'guru'])->whereNotIn('id', [Auth::user()->id])->pluck('nama', 'id');
+        $users = User::whereNotIn('role', ['superadmin', 'guru', 'admin'])->whereNotIn('id', [Auth::user()->id])->pluck('nama', 'id');
         $kategoris = Kategori::all()->pluck('judul', 'id');
         return view('siswa.laporan', compact('users', 'kategoris'));
     }

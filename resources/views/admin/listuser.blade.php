@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
+    <link href="{{asset('assets/img/smada.ico')}}" rel="icon">
     <title>User | SI APEM</title>
 
     <!-- Custom fonts for this template-->
@@ -60,10 +60,8 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
+                    <h1 class="h3 mb-2 text-gray-800">Data Pengguna</h1>
+
                             @if(session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
@@ -75,12 +73,11 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between">
 
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                             <div>
                                 <a role="button" href="" class="btn btn-primary">Tambah data</a>
                                 <a role="button" href="" class="btn btn-success" data-toggle="modal" data-target="#importModal">Import data</a>
                                 <button type="button" class="btn btn-danger" onclick="document.getElementById('delete-form').submit();">
-                                    Delete Selected
+                                    Hapus Terpilih
                                 </button>
                             </div>
                         </div>
@@ -146,7 +143,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        Website ini dikelola oleh pihak <a href="https://smadapare.sch.id/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
                     </div>
                 </div>
             </footer>
@@ -205,6 +202,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script>
         function importExcel() {
+
+
+        let fileInput = document.getElementById("excelFile");
+        let file = fileInput.files[0];
+
+        if (!file) {
+            alert("Please select an Excel file!");
+            return;
+        }else{
             let loadingModal;
 
             const modalEl = document.getElementById('loadingModal');
@@ -217,13 +223,6 @@
             });
 
         loadingModal.show();
-
-        let fileInput = document.getElementById("excelFile");
-        let file = fileInput.files[0];
-
-        if (!file) {
-            alert("Please select an Excel file!");
-            return;
         }
 
         let reader = new FileReader();

@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/smada.ico  " rel="icon">
+  <link href="{{asset('assets/img/smada.ico')}}" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
@@ -48,7 +48,7 @@
     <!-- Toggler -->
     <button class="navbar-toggler navbar-toggler-icon" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
       aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class=" mobile-nav-toggle"></span> 
+      <span class=" mobile-nav-toggle"></span>
     </button>
 
     <!-- Nav Items -->
@@ -151,7 +151,7 @@
 
     <section id="about-si-apem" class="about section bg-light py-5">
   <div class="container">
-    
+
     <!-- SI APEM -->
     <div class="row g-4 align-items-center mb-5" data-aos="fade-up">
       <div class="col-md-6">
@@ -238,9 +238,9 @@
 </section>
 
 
-      
 
-    
+
+
 
 
 

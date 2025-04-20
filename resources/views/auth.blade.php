@@ -31,6 +31,13 @@
 </head>
 <body class="flex items-center justify-center px-6 py-10">
   <div class="w-full max-w-md glass p-8 shadow-2xl text-white animate-fadeIn">
+            @if(session('status'))
+            <div class="alert alert-success">{{ session('status') }}</div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert alert-danger">{{ $errors->first() }}</div>
+        @endif
     <h2 class="text-3xl font-bold text-center mb-6 tracking-wide">👨‍💻 Login</h2>
     <form action="{{route('login')}}" method="POST" class="space-y-6">
       @csrf

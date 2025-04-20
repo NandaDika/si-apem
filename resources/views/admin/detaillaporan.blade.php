@@ -123,20 +123,19 @@
 
                                         <li class="mb-2">
                                           <span class="h6">Deskripsi :</span>
-                                          <span>{{$data->sanggah_deskripsi}}</span>
+                                          <span>{{$data->sanggah_deskripsi ?? '-'}}</span>
                                         </li>
                                         <li class="mb-2">
-                                          <span class="h6">Bukti Sanggah:</span>
+                                          <span class="h6">Bukti Sanggah:</span><br>
                                           @php
 
                                               $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($data->id);
                                           @endphp
-                                          <span><br>
-                                            @if ($data->contentType == 'application/pdf')
+                                            @if ($data->contentType2 == 'application/pdf')
                                             <a  target="_blank"  href="{{ route('admin.image.sanggah.show', ['id' => $encryptedId]) }}"> Buka Dokumen</a>
-                                            @elseif ($data->contentType == 'image/jpeg')
-                                            <img class="img-fluid w-50 " src="{{ route('admin.image.sanggah.show', ['id' => $encryptedId]) }}" alt="Encrypted Image">
-                                            @elseif ($data->contentType == 'video/mp4')
+                                            @elseif ($data->contentType2 == 'image/jpeg')
+                                            <img class="img-fluid w-50 " src="{{ route('admin.image.sanggah.show', ['id' => $encryptedId]) }}" alt="{{$data->sanggah_image ? 'Gambar':''}}">
+                                            @elseif ($data->contentType2 == 'video/mp4')
                                             <video controls class="img-fluid w-50 ">
                                                 <source src="{{ route('admin.image.sanggah.show', ['id' => $encryptedId]) }}" type="video/mp4">
                                                 Your browser does not support the video tag.
@@ -197,7 +196,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        Website ini dikelola oleh pihak <a href="https://smadapare.sch.id/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
                     </div>
                 </div>
             </footer>

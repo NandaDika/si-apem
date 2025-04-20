@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link href="{{asset('assets/img/smada.ico')}}" rel="icon">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
@@ -50,10 +51,8 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
+                    <h1 class="h3 mb-2 text-gray-800">Data Laporan</h1>
+
                             @if(session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
@@ -65,7 +64,6 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between">
 
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -94,7 +92,17 @@
                                             <td>{{$user->id}}</td>
                                             <td>{{$user->nama_kategori}}</td>
                                             <td>{{$user->deskripsi}}</td>
-                                            <td>{{$user->status}}</td>
+                                            <td>
+                                                @if ($user->status == 'diproses')
+                                                    <span class="badge badge-info">diproses</span>
+                                                @elseif ($user->status == 'disanggah')
+                                                <span class="badge badge-info">disanggah</span>
+                                                @elseif ($user->status == 'ditolak')
+                                                    <span class="badge badge-danger">ditolak</span>
+                                                @elseif ($user->status == 'diterima')
+                                                    <span class="badge badge-success">diterima</span>
+                                                @endif
+                                            </td>
                                             <td>
                                                 <form method="POST" action="{{route('admin.laporan.detail')}}">
                                                     @csrf
@@ -103,7 +111,7 @@
                                                         $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($user->id);
                                                     @endphp
                                                     <input type="hidden" name="id_laporan" value="{{$encryptedId}}">
-                                                    <button type="submit" class="btn btn-primary">Lihat</button>
+                                                    <button type="submit" class="btn btn-primary"><i class="fa fa-eye"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -125,7 +133,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        Website ini dikelola oleh pihak <a href="https://smadapare.sch.id/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
                     </div>
                 </div>
             </footer>

@@ -59,7 +59,7 @@ Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
     Route::delete('/kategori/delete-multiple', [AdminController::class, 'deleteMultipleKategori'])->name('kategori.deleteMultiple')->middleware('onlyadmin');
     Route::post('/admin/laporan/tolak/{id}', [AdminController::class, 'tolakLaporan'])->name('admin.tolak');
     Route::post('/admin/laporan/terima/{id}', [AdminController::class, 'terimaLaporan'])->name('admin.terima');
-    Route::get('/admin/401', function(){return view('admin.notauth');})->name('admin.notauth');
+    Route::get('/admin/401', function(){return view('admin.noauth');})->name('admin.notauth');
 });
 
 Route::middleware(['auth', 'role:siswa'])->group(function(){

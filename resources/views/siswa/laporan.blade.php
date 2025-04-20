@@ -55,7 +55,6 @@
 
 .custom-file-upload input[type="file"] {
     opacity: 0;
-    position: absolute;
     width: 100%;
     height: 100%;
     cursor: pointer;
@@ -196,7 +195,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        Website ini dikelola oleh pihak <a href="https://smadapare.sch.id/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
                     </div>
                 </div>
             </footer>

@@ -22,7 +22,7 @@ class PublicController extends Controller
         // Attempt login using 'id' instead of 'email'
         if (Auth::attempt(['id' => $credentials['id'], 'password' => $credentials['password']], $request->filled('remember'))) {
             $request->session()->regenerate();
-            if (Auth::user()->role == 'superadmin') {
+            if (Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin') {
                 return redirect()->intended(route('admin.dashboard'));
             }else if(Auth::user()->role == 'guru'){
                 return redirect()->intended(route('guru.dashboard'));
@@ -31,6 +31,9 @@ class PublicController extends Controller
             }
 
         }
+        return back()->withErrors([
+            'error' => 'Email atau kata sandi yang Anda masukkan tidak sesuai.',
+        ])->withInput();
 
         // If authentication fails, throw an error
         throw ValidationException::withMessages([

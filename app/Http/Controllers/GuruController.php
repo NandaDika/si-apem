@@ -33,6 +33,37 @@ class GuruController extends Controller
         $data = DB::table('laporans')
         ->join('kategoris', 'laporans.kategori', '=', 'kategoris.id')
         ->where('laporans.id', $decryptedID)->select('laporans.*', 'kategoris.judul as nama_kategori')->first();
+        $filedata = strtolower(pathinfo($data->image, PATHINFO_EXTENSION));
+        if (in_array($filedata, ['jpg', 'jpeg', 'png'])) {
+            // Handle image preview
+            $data->contentType = 'image/jpeg';
+        } elseif ($filedata === 'pdf') {
+            // Handle PDF preview
+            $data->contentType = 'application/pdf';
+        } elseif ($filedata === 'mp4') {
+            // Handle video preview
+            $data->contentType = 'video/mp4';
+        } else {
+            // Unknown or unsupported file type
+            abort(415, 'Unsupported Media Type');
+        }
+
+        if ($data->sanggah_image != NULL) {
+            $filedata2 = strtolower(pathinfo($data->sanggah_image, PATHINFO_EXTENSION));
+            if (in_array($filedata2, ['jpg', 'jpeg', 'png'])) {
+                // Handle image preview
+                $data->contentType2 = 'image/jpeg';
+            } elseif ($filedata2 === 'pdf') {
+                // Handle PDF preview
+                $data->contentType2 = 'application/pdf';
+            } elseif ($filedata2 === 'mp4') {
+                // Handle video preview
+                $data->contentType2 = 'video/mp4';
+            } else {
+                // Unknown or unsupported file type
+                abort(415, 'Unsupported Media Type');
+            }
+        }
         return view('guru.detaillaporan', ['data' => $data]);
     }
 }

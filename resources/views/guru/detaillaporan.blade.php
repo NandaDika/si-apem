@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link href="{{asset('assets/img/smada.ico')}}" rel="icon">
 
     <title>Detail Laporan | SI APEM</title>
 
@@ -87,7 +88,18 @@
 
                                         $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($data->id);
                                     @endphp
-                                    <span><br><img class="img-fluid w-50 " src="{{ route('guru.image.show', ['id' => $encryptedId]) }}" alt="Encrypted Image"></span>
+                                    <span><br>
+                                        @if ($data->contentType == 'application/pdf')
+                                        <a  target="_blank"  href="{{ route('guru.image.show', ['id' => $encryptedId]) }}"> Buka Dokumen</a>
+                                        @elseif ($data->contentType == 'image/jpeg')
+                                        <img class="img-fluid w-50 " src="{{ route('guru.image.show', ['id' => $encryptedId]) }}" alt="{{$data->sanggah_image ? 'Gambar':''}}">
+                                        @elseif ($data->contentType == 'video/mp4')
+                                        <video controls class="img-fluid w-50 ">
+                                            <source src="{{ route('guru.image.show', ['id' => $encryptedId]) }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        @endif
+                                    </span>
                                   </li>
 
                                 </ul>
@@ -120,7 +132,17 @@
 
                                               $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($data->id);
                                           @endphp
-                                          <span><br><img class="img-fluid w-50 " src="{{ route('guru.image.sanggah.show', ['id' => $encryptedId]) }}" alt="Encrypted Image"></span>
+                                          <span><br>
+                                            @if ($data->contentType2 == 'application/pdf')
+                                            <a  target="_blank"  href="{{ route('guru.image.sanggah.show', ['id' => $encryptedId]) }}"> Buka Dokumen</a>
+                                            @elseif ($data->contentType2 == 'image/jpeg')
+                                            <img class="img-fluid w-50 " src="{{ route('guru.image.sanggah.show', ['id' => $encryptedId]) }}" alt="{{$data->sanggah_image ? 'Gambar':''}}">
+                                            @elseif ($data->contentType2 == 'video/mp4')
+                                            <video controls class="img-fluid w-50 ">
+                                                <source src="{{ route('guru.image.sanggah.show', ['id' => $encryptedId]) }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            @endif</span>
                                         </li>
 
                                       </ul>
@@ -141,7 +163,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        Website ini dikelola oleh pihak <a href="https://smadapare.sch.id/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
                     </div>
                 </div>
             </footer>

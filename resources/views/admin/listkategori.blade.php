@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link href="{{asset('assets/img/smada.ico')}}" rel="icon">
 
     <title>Kategori | SI APEM</title>
 
@@ -40,7 +40,16 @@
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
+            <div class="modal fade show" id="loadingModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" style="display: none; z-index: 9999;">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content text-center">
+                    <div class="modal-body py-5 bg-white">
+                      <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
+                      <p class="mb-0 fs-5 text-secondary">Processing your request...</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             <!-- Main Content -->
             <div id="content">
 
@@ -50,10 +59,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
+                    <h1 class="h3 mb-2 text-gray-800">Data Kategori</h1>
                             @if(session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
@@ -65,12 +71,11 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between">
 
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                             <div>
                                 <a role="button" href="" class="btn btn-primary">Tambah data</a>
                                 <a role="button" href="" class="btn btn-success" data-toggle="modal" data-target="#importModal">Import data</a>
                                 <button type="button" class="btn btn-danger" onclick="document.getElementById('delete-form').submit();">
-                                    Delete Selected
+                                    Hapus Terpilih
                                 </button>
                             </div>
                         </div>
@@ -91,6 +96,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th></th>
                                             <th>ID</th>
                                             <th>Nama Kategori</th>
                                             <th>Poin</th>
@@ -128,7 +134,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        Website ini dikelola oleh pihak <a href="https://smadapare.sch.id/" target="_blank" rel="noopener noreferrer">SMAN 2 Pare 	</a> &#169; 2025
                     </div>
                 </div>
             </footer>
@@ -193,6 +199,19 @@
         if (!file) {
             alert("Please select an Excel file!");
             return;
+        }else{
+            let loadingModal;
+
+            const modalEl = document.getElementById('loadingModal');
+            modalEl.style.display = 'block';
+
+            // Ensure modal is shown manually (non-dismissible)
+            loadingModal = new bootstrap.Modal(modalEl, {
+            backdrop: 'static',
+            keyboard: false
+            });
+
+            loadingModal.show();
         }
 
         let reader = new FileReader();
