@@ -53,7 +53,7 @@
                         @endif
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard Siswa</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard Pengguna</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -142,7 +142,7 @@
                     <!-- Content Row -->
 
                     <div class="row">
-
+                        @if(Auth::user()->role == 'siswa')
                         <!-- Area Chart -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
@@ -198,7 +198,39 @@
                                 </div>
                             </div>
                         </div>
-
+                        @elseif (Auth::user()->role == 'staff_tendik')
+                        <div class="col-xl-12 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header -->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Informasi Pengguna</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body p-0">
+                                    <table class="table mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <td class="bg-primary text-white font-weight-bold" style="width: 30%;">Nama </td>
+                                                <td>{{$siswa->nama}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bg-primary text-white font-weight-bold">Poin </td>
+                                                <td><span class="badge badge-info">{{$siswa->poin}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bg-primary text-white font-weight-bold">Jumlah Terlapor</td>
+                                                <td>{{$jumlahMelaporkan}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bg-primary text-white font-weight-bold">Jumlah Melapor</td>
+                                                <td>{{$jumlahDiterlapor}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
 
 
 

@@ -26,11 +26,29 @@
         Menu
     </div>
 
+    <li class="nav-item {{ Request::routeIs('guru.lapor') ? 'active' : '' }}">
+        <a class="nav-link" href="{{route('guru.lapor')}}">
+            <i class="fas fa-fw fa-gavel    "></i>
+            <span>Lapor</span></a>
+    </li>
+
     <!-- Nav Item - Tables -->
     <li class="nav-item {{ Request::routeIs('guru.laporan') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('guru.laporan')}}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Laporan</span></a>
+            <span>Laporan Kelas</span></a>
+    </li>
+
+    <li class="nav-item {{ Request::routeIs('guru.riwayat') ? 'active' : '' }}">
+        <a class="nav-link" href="{{route('guru.riwayat')}}">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Riwayat Laporan</span></a>
+    </li>
+
+    <li class="nav-item {{ Request::routeIs('guru.dilaporkan') ? 'active' : '' }}">
+        <a class="nav-link" href="{{route('guru.dilaporkan')}}">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Dilaporkan</span></a>
     </li>
 
     <!-- Divider -->

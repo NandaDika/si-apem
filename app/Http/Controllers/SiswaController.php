@@ -66,7 +66,7 @@ public function changePassword(Request $request, $id)
 }
 
     public function pageLaporan(){
-        $users = User::whereNotIn('role', ['superadmin', 'guru', 'admin'])->whereNotIn('id', [Auth::user()->id])->pluck('nama', 'id');
+        $users = User::whereNotIn('role', ['superadmin', 'admin'])->whereNotIn('id', [Auth::user()->id])->pluck('nama', 'id');
         $kategoris = Kategori::all()->pluck('judul', 'id');
         return view('siswa.laporan', compact('users', 'kategoris'));
     }
@@ -262,6 +262,6 @@ public function changePassword(Request $request, $id)
             Storage::put('/private/bukti/' . $filename, $encryptedFile);
         }
 
-        return redirect('/siswa/laporan')->with('message', 'Laporan berhasil disanggah');
+        return redirect('/user/laporan')->with('message', 'Laporan berhasil disanggah');
     }
 }

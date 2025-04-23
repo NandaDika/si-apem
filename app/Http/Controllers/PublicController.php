@@ -14,6 +14,7 @@ class PublicController extends Controller
     }
 
     public function login(Request $request){
+
         $credentials = $request->validate([
             'id' => ['required', 'string'],
             'password' => ['required'],
@@ -26,7 +27,7 @@ class PublicController extends Controller
                 return redirect()->intended(route('admin.dashboard'));
             }else if(Auth::user()->role == 'guru'){
                 return redirect()->intended(route('guru.dashboard'));
-            }else if(Auth::user()->role == 'siswa'){
+            }else if(Auth::user()->role == 'siswa' || Auth::user()->role == 'staff_tendik'){
                 return redirect()->intended(route('siswa.dashboard'));
             }
 

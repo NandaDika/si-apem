@@ -60,6 +60,37 @@
 
                     <!-- Content Row -->
                     <div class="row">
+                        <div class="col-xl-12 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header -->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Informasi Pengguna</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body p-0">
+                                    <table class="table mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <td class="bg-primary text-white font-weight-bold" style="width: 30%;">Nama </td>
+                                                <td>{{$siswa->nama}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bg-primary text-white font-weight-bold">Poin </td>
+                                                <td><span class="badge badge-info">{{$siswa->poin}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bg-primary text-white font-weight-bold">Jumlah Terlapor</td>
+                                                <td>{{$jumlahMelaporkan}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bg-primary text-white font-weight-bold">Jumlah Melapor</td>
+                                                <td>{{$jumlahDiterlapor}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">

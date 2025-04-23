@@ -102,6 +102,8 @@
                                 <option value="siswa" {{ old('role', $user->role) == 'siswa' ? 'selected' : '' }}>Siswa</option>
                                 <option value="guru" {{ old('role', $user->role) == 'guru' ? 'selected' : '' }}>Guru</option>
                                 <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
+                                <option value="staff_tendik" {{ old('role', $user->role) == 'staff_tendik' ? 'selected' : '' }}>Staff / Tendik</option>
+
                             </select>
                             @if($errors->has('role'))
                                 <div class="text-danger">{{ $errors->first('role') }}</div>
@@ -124,8 +126,22 @@
                             @endif
                         </div>
 
+                        <div class="form-group">
+                            <label for="password">Password Baru</label>
+                            <input type="password" name="password" id="password" class="form-control">
+                            @if($errors->has('password'))
+                                <div class="text-danger">{{ $errors->first('password') }}</div>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password_confirmation">Konfirmasi Password Baru</label>
+                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+                        </div>
+
+
                         <!-- Hapus bagian password dan password_confirmation -->
-                        
+
                         <div class="text-right">
                             <a href="{{ route('admin.users') }}" class="btn btn-secondary">Batal</a>
                             <button type="submit" class="btn btn-primary">Simpan</button>

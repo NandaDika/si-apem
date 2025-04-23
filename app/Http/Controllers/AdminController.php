@@ -66,7 +66,7 @@ public function index()
         $request->validate([
             'id' => 'required|unique:users,id',
             'nama' => 'required|string',
-            'role' => 'required|in:siswa,guru,superadmin',
+            'role' => 'required|in:siswa,guru,admin,staff_tendik',
             'kode_guru' => 'nullable|string',
             'poin' => 'required|integer|min:0',
             'password' => 'required|string|min:8|confirmed',
@@ -99,7 +99,7 @@ public function index()
         $request->validate([
             'id' => 'required|unique:users,id,' . $id,  // Menambahkan pengecualian pada ID yang sedang diperbarui
             'nama' => 'required|string',
-            'role' => 'required|in:siswa,guru,superadmin',
+            'role' => 'required|in:siswa,guru,admin,staff_tendik',
             'kode_guru' => 'nullable|string',
             'poin' => 'required|integer|min:0',
             'password' => 'nullable|string|min:8|confirmed', // Password opsional saat update
@@ -128,7 +128,7 @@ public function index()
             $user = User::findOrFail($id);
             return view('admin.change-password', compact('user'));
         }
-    
+
 
     public function changePassword(Request $request, $id)
         {
@@ -185,10 +185,11 @@ public function index()
         $data = DB::table('laporans')
         ->leftJoin('users', 'laporans.kode_terlapor', '=', 'users.id')
         ->leftJoin('kategoris', 'laporans.kategori', '=', 'kategoris.id')
-        ->select('laporans.*', 'users.nama as nama_terlapor', 'kategoris.judul as nama_kategori')->get();
+        ->select('laporans.*', 'users.nama as nama_terlapor', 'kategoris.judul as nama_kategori')
+        ->orderBy('laporans.created_at', 'asc')
+        ->get();
 
         return view('admin.listriwayat', ['users' => $data]);
-        dd($data);
     }
 
     public function getDetailLaporan(Request $request){

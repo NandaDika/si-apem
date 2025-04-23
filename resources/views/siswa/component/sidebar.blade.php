@@ -34,13 +34,13 @@
     <li class="nav-item {{ Request::routeIs('siswa.riwayat') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('siswa.riwayat')}}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Pengajuan</span></a>
+            <span>Riwayat Laporan</span></a>
     </li>
 
     <li class="nav-item {{ Request::routeIs('siswa.dilaporkan') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('siswa.dilaporkan')}}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Laporan</span></a>
+            <span>Dilaporakan</span></a>
     </li>
 
     <!-- Divider -->

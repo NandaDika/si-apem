@@ -9,9 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <link href="{{asset('assets/img/smada.ico')}}" rel="icon">
-    <title>User | SI APEM</title>
+
+
+    <title>Dilaporkan | SI APEM</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -35,33 +36,23 @@
         @endif
 
         <!-- Sidebar -->
-        @include('admin.component.sidebar')
+        @include('guru.component.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-            <div class="modal fade show" id="loadingModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" style="display: none; z-index: 9999;">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content text-center">
-                    <div class="modal-body py-5 bg-white">
-                      <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
-                      <p class="mb-0 fs-5 text-secondary">Processing your request...</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
             <!-- Main Content -->
             <div id="content">
 
                 <!-- Topbar -->
-                @include('admin.component.header')
+                @include('guru.component.header')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <!-- <h1 class="h3 mb-2 text-gray-800">Data Pengguna</h1> -->
-
+                    <h1 class="h3 mb-2 text-gray-800">Data Dilaporkan</h1>
+                    <p class="mb-4">Data yang ditampilkan adalah data laporan yang diajukan terhadap anda.</p>
                             @if(session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
@@ -71,86 +62,77 @@
                         @endif
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Tambah Data User</h6>
-                </div>
-                <div class="card-body">
-                <form action="{{ route('admin.user.store') }}" method="POST">
-                    @csrf
+                        <div class="card-header py-3 d-flex justify-content-between">
 
-                    <div class="form-group">
-                        <label for="id">NIS / NIP</label>
-                        <input type="text" name="id" id="id" class="form-control" required value="{{ old('id') }}">
-                        @if($errors->has('id'))
-                            <div class="text-danger">{{ $errors->first('id') }}</div>
-                        @endif
+
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Terlapor</th>
+                                            <th>Kategori</th>
+                                            <th>Deskripsi</th>
+                                            <th>Status</th>
+                                            <th>Opsi</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Terlapor</th>
+                                            <th>Kategori</th>
+                                            <th>Deskripsi</th>
+                                            <th>Status</th>
+                                            <th>Opsi</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach ($users as $user)
+                                        <tr>
+                                            <td>{{$user->nama_terlapor}}</td>
+                                            <td>{{$user->nama_kategori}}</td>
+                                            <td>{{$user->deskripsi}}</td>
+                                            <td>@if ($user->status == 'diproses')
+                                                <span class="badge badge-info">diproses</span>
+                                            @elseif ($user->status == 'disanggah')
+                                            <span class="badge badge-info">disanggah</span>
+                                            @elseif ($user->status == 'ditolak')
+                                                <span class="badge badge-danger">ditolak</span>
+                                            @elseif ($user->status == 'diterima')
+                                                <span class="badge badge-success">diterima</span>
+                                            @endif</td>
+                                            <td>
+                                                @if ($user->status == 'diproses')
+                                                <form method="POST" action="{{route('guru.laporan.sanggah')}}">
+                                                    @csrf
+                                                    @php
+
+                                                        $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($user->id);
+                                                    @endphp
+                                                    <input type="hidden" name="id_laporan" value="{{$encryptedId}}">
+                                                    <button type="submit" class="btn btn-primary"><i class="fa fa-eye"></i></button>
+                                                </form>
+                                                @else
+                                                <form method="POST" action="{{route('guru.laporan.detail')}}">
+                                                    @csrf
+                                                    @php
+
+                                                        $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($user->id);
+                                                    @endphp
+                                                    <input type="hidden" name="id_laporan" value="{{$encryptedId}}">
+                                                    <button type="submit" class="btn btn-primary"><i class="fa fa-eye"></i></button>
+                                                </form>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="nama">Nama</label>
-                        <input type="text" name="nama" id="nama" class="form-control" required value="{{ old('nama') }}">
-                        @if($errors->has('nama'))
-                            <div class="text-danger">{{ $errors->first('nama') }}</div>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <label for="role">Role</label>
-                        <select name="role" id="role" class="form-control" required>
-                            <option value="">-- Pilih Role --</option>
-                            <option value="siswa" {{ old('role') == 'siswa' ? 'selected' : '' }}>Siswa</option>
-                            <option value="guru" {{ old('role') == 'guru' ? 'selected' : '' }}>Guru</option>
-                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                            <option value="staff_tendik" {{ old('role') == 'staff_tendik' ? 'selected' : '' }}>Staff / Tendik</option>
-
-                        </select>
-                        @if($errors->has('role'))
-                            <div class="text-danger">{{ $errors->first('role') }}</div>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <label for="kode_guru">Kode Guru</label>
-                        <input type="text" name="kode_guru" id="kode_guru" class="form-control" value="{{ old('kode_guru') }}">
-                        @if($errors->has('kode_guru'))
-                            <div class="text-danger">{{ $errors->first('kode_guru') }}</div>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <label for="poin">Poin</label>
-                        <input type="number" name="poin" id="poin" class="form-control" required min="0" value="{{ old('poin') }}">
-                        @if($errors->has('poin'))
-                            <div class="text-danger">{{ $errors->first('poin') }}</div>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" class="form-control" required>
-                        @if($errors->has('password'))
-                            <div class="text-danger">{{ $errors->first('password') }}</div>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password_confirmation">Konfirmasi Password</label>
-                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
-                        @if($errors->has('password_confirmation'))
-                            <div class="text-danger">{{ $errors->first('password_confirmation') }}</div>
-                        @endif
-                    </div>
-
-                    <div class="text-right">
-                        <a href="{{ route('admin.users') }}" class="btn btn-secondary">Batal</a>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-
-                </div>
-            </div>
-
-
 
                 </div>
                 <!-- /.container-fluid -->
@@ -221,27 +203,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script>
         function importExcel() {
-
-
         let fileInput = document.getElementById("excelFile");
         let file = fileInput.files[0];
 
         if (!file) {
             alert("Please select an Excel file!");
             return;
-        }else{
-            let loadingModal;
-
-            const modalEl = document.getElementById('loadingModal');
-            modalEl.style.display = 'block';
-
-            // Ensure modal is shown manually (non-dismissible)
-            loadingModal = new bootstrap.Modal(modalEl, {
-            backdrop: 'static',
-            keyboard: false
-            });
-
-        loadingModal.show();
         }
 
         let reader = new FileReader();
@@ -261,7 +228,6 @@
                 poin: row[3] && row[3].trim() !== '' ? row[3] : 0,
                 kode_guru: row[4] && row[4].trim() !== '' ? row[4] : 'SUPERADMIN',
                 password: row[5] ? row[5] : 'siapem001', // Column C (Index 2)
-                link_dapodik: row[6] ? row[6] : 'NULL',
             }));
 
             console.log(formattedData); // Check in console
@@ -282,7 +248,7 @@
     function sendToServer(sheetData) {
     console.log("Data Inside sendToServer():", sheetData);
 
-    fetch("/users/import", {
+    fetch("http://192.168.88.254:8000/users/import", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

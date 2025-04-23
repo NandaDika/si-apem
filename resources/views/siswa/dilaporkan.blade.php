@@ -111,7 +111,7 @@
                                                         $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($user->id);
                                                     @endphp
                                                     <input type="hidden" name="id_laporan" value="{{$encryptedId}}">
-                                                    <button type="submit" class="btn btn-primary">Lihat</button>
+                                                    <button type="submit" class="btn btn-primary"><i class="fa fa-eye"></i></button>
                                                 </form>
                                                 @else
                                                 <form method="POST" action="{{route('siswa.laporan.detail')}}">
